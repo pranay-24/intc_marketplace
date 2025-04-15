@@ -1,0 +1,99 @@
+{
+  "accessCode": "Asdfghjkl!1990",
+  "collections": [
+    {
+      "id": 1,
+      "name": "Accident Insurance",
+      "description": "Covers accidental injuries with multiple plan options.",
+      "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200",
+      "products": [
+        {
+          "id": 101,
+          "name": "Accident Insurance - Plan A",
+          "price": 14.03,
+          "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1b98?auto=format&fit=crop&w=1200"
+        },
+        {
+          "id": 102,
+          "name": "Accident Insurance - Plan B",
+          "price": 20.97,
+          "image": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Cancer Insurance",
+      "description": "Provides coverage for cancer treatments and related benefits.",
+      "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200",
+      "products": [
+        {
+          "id": 201,
+          "name": "Cancer Insurance Basic Plan",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Critical Illness Insurance",
+      "description": "Offers critical illness coverage with adjustable benefit amounts.",
+      "image": "https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&w=1200",
+      "products": [
+        {
+          "id": 301,
+          "name": "Critical Illness - Basic",
+          "price": 200.00,
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200"
+        },
+        {
+          "id": 302,
+          "name": "Critical Illness - Enhanced",
+          "price": 300.00,
+          "image": "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=1200"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Hospital Indemnity Insurance",
+      "description": "Covers hospital admissions and related treatments with various plan options.",
+      "image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200",
+      "products": [
+        {
+          "id": 401,
+          "name": "Hospital Indemnity - Plan A",
+          "price": 750.00,
+          "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200"
+        },
+        {
+          "id": 402,
+          "name": "Hospital Indemnity - Plan B",
+          "price": 1500.00,
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Short Term Accident Sickness Pay",
+      "description": "Provides short term benefits for accident or sickness, with salary-based options.",
+      "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200",
+      "products": [
+        {
+          "id": 501,
+          "name": "Short Term Accident Sickness - Basic",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200"
+        },
+        {
+          "id": 502,
+          "name": "Short Term Accident Sickness - Premium",
+          "price": 100.00,
+          "image": "https://images.unsplash.com/photo-1612277795421-9bc7706a4a34?auto=format&fit=crop&w=1200"
+        }
+      ]
+    }
+  ]
+}
