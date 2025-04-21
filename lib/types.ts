@@ -26,8 +26,23 @@ export interface Product {
   image: string;
 }
 
-export interface FormData {
+export interface Question {
+  id: string;
+  question: string;
+  type: "single_choice" | "multi_choice" | "text";
+  options?: string[];
+  placeholder?: string;
+  required: boolean;
+}
+
+export interface CollectionQuestions {
+  collectionName: string;
+  questions: Question[];
+}
+
+export interface FormState {
   collection?: Collection;
+  questions?: Record<string, string | string[]>;
   product?: Product;
   customerInfo?: CustomerData;
 }

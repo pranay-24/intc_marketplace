@@ -4,50 +4,66 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import collections from "@/data/collections.json";
-import { Collection, Product, customerSchema, FormData } from "@/lib/types";
+import questionsData from "@/data/questions.json";
+import { Collection, Product, customerSchema, FormState, CustomerData, Question } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function MultiStepForm() {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<FormData>({});
+  const [formState, setFormState] = useState<FormState>({});
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<CustomerData>({
     resolver: zodResolver(customerSchema),
   });
 
   const selectCollection = (collection: Collection) => {
-    setFormData({ ...formData, collection });
+    setFormState({ ...formState, collection });
     setStep(2);
   };
 
-  const selectProduct = (product: Product) => {
-    setFormData({ ...formData, product });
+  const handleQuestionSubmit = (answers: Record<string, string | string[]>) => {
+    setFormState({ ...formState, questions: answers });
     setStep(3);
   };
 
-  const onSubmit = (customerInfo: any) => {
-    const finalFormData = { ...formData, customerInfo };
+  const selectProduct = (product: Product) => {
+    setFormState({ ...formState, product });
+    setStep(4);
+  };
+
+  const onSubmit = (customerInfo: CustomerData) => {
+    const finalFormData = { ...formState, customerInfo };
     console.log("Final Form Data:", finalFormData);
     // Here you can handle the form submission
+  };
+
+  const getQuestionsForCollection = () => {
+    if (!formState.collection) return [];
+    const collectionQuestions = questionsData.collections.find(
+      (c) => c.collectionName === formState.collection?.name
+    );
+    return collectionQuestions?.questions || [];
   };
 
   return (
     <div className="space-y-8">
       {/* Progress Bar */}
       <div className="flex justify-between mb-8">
-        {[1, 2, 3].map((number) => (
+        {[1, 2, 3, 4].map((number) => (
           <div
             key={number}
             className={`flex items-center ${
-              number !== 3 ? "flex-1" : ""
+              number !== 4 ? "flex-1" : ""
             }`}
           >
             <div
@@ -59,7 +75,7 @@ export default function MultiStepForm() {
             >
               {number}
             </div>
-            {number !== 3 && (
+            {number !== 4 && (
               <div
                 className={`flex-1 h-1 mx-4 ${
                   step > number ? "bg-primary" : "bg-gray-300"
@@ -93,9 +109,9 @@ export default function MultiStepForm() {
         </div>
       )}
 
-      {/* Step 2: Product Selection */}
-      {step === 2 && formData.collection && (
-        <div>
+      {/* Step 2: Questions */}
+      {step === 2 && formState.collection && (
+        <div className="space-y-6">
           <Button
             variant="ghost"
             className="mb-4"
@@ -103,8 +119,93 @@ export default function MultiStepForm() {
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Collections
           </Button>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formElement = e.target as HTMLFormElement;
+              const formData = new FormData(formElement);
+              const answers: Record<string, string | string[]> = {};
+
+              getQuestionsForCollection().forEach((question: Question) => {
+                if (question.type === "multi_choice") {
+                  const selectedOptions = question.options?.filter(
+                    (option) => formData.get(`${question.id}_${option}`) === "on"
+                  ) || [];
+                  answers[question.id] = selectedOptions;
+                } else {
+                  const value = formData.get(question.id);
+                  if (value) answers[question.id] = value.toString();
+                }
+              });
+
+              handleQuestionSubmit(answers);
+            }}
+            className="space-y-6"
+          >
+            {getQuestionsForCollection().map((question: Question) => (
+              <div key={question.id} className="space-y-4">
+                <Label className="text-lg font-medium">
+                  {question.question}
+                  {question.required && (
+                    <span className="text-red-500 ml-1">*</span>
+                  )}
+                </Label>
+
+                {question.type === "text" && (
+                  <Input
+                    name={question.id}
+                    placeholder={question.placeholder}
+                    required={question.required}
+                  />
+                )}
+
+                {question.type === "single_choice" && (
+                  <RadioGroup name={question.id} required={question.required}>
+                    {question.options?.map((option) => (
+                      <div key={option} className="flex items-center space-x-2">
+                        <RadioGroupItem value={option} id={`${question.id}_${option}`} />
+                        <Label htmlFor={`${question.id}_${option}`}>{option}</Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                )}
+
+                {question.type === "multi_choice" && (
+                  <div className="space-y-2">
+                    {question.options?.map((option) => (
+                      <div key={option} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`${question.id}_${option}`}
+                          name={`${question.id}_${option}`}
+                        />
+                        <Label htmlFor={`${question.id}_${option}`}>{option}</Label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            <Button type="submit" className="w-full">
+              Continue to Products <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </form>
+        </div>
+      )}
+
+      {/* Step 3: Product Selection */}
+      {step === 3 && formState.collection && (
+        <div>
+          <Button
+            variant="ghost"
+            className="mb-4"
+            onClick={() => setStep(2)}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Questions
+          </Button>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {formData.collection.products.map((product) => (
+            {formState.collection.products.map((product) => (
               <Card
                 key={product.id}
                 className="p-6 cursor-pointer hover:shadow-lg transition-shadow"
@@ -127,14 +228,14 @@ export default function MultiStepForm() {
         </div>
       )}
 
-      {/* Step 3: Customer Information */}
-      {step === 3 && (
+      {/* Step 4: Customer Information */}
+      {step === 4 && (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <Button
             type="button"
             variant="ghost"
             className="mb-4"
-            onClick={() => setStep(2)}
+            onClick={() => setStep(3)}
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Products
           </Button>

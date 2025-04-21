@@ -1,0 +1,99 @@
+{
+    "collections": [
+      {
+        "collectionName": "Accident Insurance",
+        "questions": [
+          {
+            "id": "accident_1",
+            "question": "Select your coverage plan:",
+            "type": "single_choice",
+            "options": ["Plan A", "Plan B"],
+            "required": false
+          },
+          {
+            "id": "accident_2",
+            "question": "Do you need dependent coverage?",
+            "type": "single_choice",
+            "options": ["Yes", "No"],
+            "required": true
+          }
+        ]
+      },
+      {
+        "collectionName": "Cancer Insurance",
+        "questions": [
+          {
+            "id": "cancer_1",
+            "question": "Have you or any family member been diagnosed with cancer?",
+            "type": "single_choice",
+            "options": ["Yes", "No"],
+            "required": true
+          },
+          {
+            "id": "cancer_2",
+            "question": "Select applicable family members for benefits:",
+            "type": "multi_choice",
+            "options": ["Insured", "Spouse", "Children"],
+            "required": true
+          }
+        ]
+      },
+      {
+        "collectionName": "Critical Illness Insurance",
+        "questions": [
+          {
+            "id": "critical_1",
+            "question": "Have you experienced any serious health conditions in the past 5-10 years?",
+            "type": "single_choice",
+            "options": ["Yes", "No"],
+            "required": true
+          },
+          {
+            "id": "critical_2",
+            "question": "Select your desired coverage amount:",
+            "type": "single_choice",
+            "options": ["$5,000", "$10,000", "$15,000", "$20,000", "$25,000"],
+            "required": true
+          }
+        ]
+      },
+      {
+        "collectionName": "Hospital Indemnity Insurance",
+        "questions": [
+          {
+            "id": "hospital_1",
+            "question": "Choose your preferred hospital plan:",
+            "type": "single_choice",
+            "options": ["Plan A", "Plan B"],
+            "required": true
+          },
+          {
+            "id": "hospital_2",
+            "question": "Do you agree to electronic delivery consent?",
+            "type": "single_choice",
+            "options": ["Yes", "No"],
+            "required": true
+          }
+        ]
+      },
+      {
+        "collectionName": "Short Term Accident Sickness Pay",
+        "questions": [
+          {
+            "id": "short_term_1",
+            "question": "What is your annual salary?",
+            "type": "text",
+            "placeholder": "Enter your salary",
+            "required": true
+          },
+          {
+            "id": "short_term_2",
+            "question": "Select your preferred daily benefit amount:",
+            "type": "single_choice",
+            "options": ["$50", "$100", "$150", "$200"],
+            "required": true
+          }
+        ]
+      }
+    ]
+  }
