@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import collections from "@/data/collections.json";
 import questionsData from "@/data/questions.json";
-import { Collection, Product, customerSchema, FormState, CustomerData, Question } from "@/lib/types";
+import { Collection, Product, customerSchema, FormState, CustomerData, Question, ChoiceQuestion } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -127,11 +127,12 @@ export default function MultiStepForm() {
               const formData = new FormData(formElement);
               const answers: Record<string, string | string[]> = {};
 
-              getQuestionsForCollection().forEach((question: Question) => {
+              getQuestionsForCollection().forEach((question) => {
                 if (question.type === "multi_choice") {
-                  const selectedOptions = question.options?.filter(
+                  const choiceQuestion = question as ChoiceQuestion;
+                  const selectedOptions = choiceQuestion.options.filter(
                     (option) => formData.get(`${question.id}_${option}`) === "on"
-                  ) || [];
+                  );
                   answers[question.id] = selectedOptions;
                 } else {
                   const value = formData.get(question.id);
@@ -143,7 +144,7 @@ export default function MultiStepForm() {
             }}
             className="space-y-6"
           >
-            {getQuestionsForCollection().map((question: Question) => (
+            {getQuestionsForCollection().map((question) => (
               <div key={question.id} className="space-y-4">
                 <Label className="text-lg font-medium">
                   {question.question}
@@ -162,7 +163,7 @@ export default function MultiStepForm() {
 
                 {question.type === "single_choice" && (
                   <RadioGroup name={question.id} required={question.required}>
-                    {question.options?.map((option) => (
+                    {(question as ChoiceQuestion).options.map((option) => (
                       <div key={option} className="flex items-center space-x-2">
                         <RadioGroupItem value={option} id={`${question.id}_${option}`} />
                         <Label htmlFor={`${question.id}_${option}`}>{option}</Label>
@@ -173,7 +174,7 @@ export default function MultiStepForm() {
 
                 {question.type === "multi_choice" && (
                   <div className="space-y-2">
-                    {question.options?.map((option) => (
+                    {(question as ChoiceQuestion).options.map((option) => (
                       <div key={option} className="flex items-center space-x-2">
                         <Checkbox
                           id={`${question.id}_${option}`}
