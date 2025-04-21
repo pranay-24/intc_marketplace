@@ -25,20 +25,32 @@ export interface Product {
   price: number;
   image: string;
 }
+export type QuestionType = "single_choice" | "multi_choice" | "text";
 
-export interface Question {
+export interface BaseQuestion {
   id: string;
   question: string;
-  type: "single_choice" | "multi_choice" | "text";
-  options?: string[];
-  placeholder?: string;
+  type: QuestionType;
   required: boolean;
 }
+
+export interface TextQuestion extends BaseQuestion {
+  type: "text";
+  placeholder: string;
+}
+
+export interface ChoiceQuestion extends BaseQuestion {
+  type: "single_choice" | "multi_choice";
+  options: string[];
+}
+
+export type Question = TextQuestion | ChoiceQuestion;
 
 export interface CollectionQuestions {
   collectionName: string;
   questions: Question[];
 }
+
 
 export interface FormState {
   collection?: Collection;
