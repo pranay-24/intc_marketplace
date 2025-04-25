@@ -78,7 +78,7 @@ export default function MultiStepForm() {
      // console.log(formState);
       setStep(5);
      
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating cart:', error);
       setError(`Failed to create cart: ${error.message}`);
     }
