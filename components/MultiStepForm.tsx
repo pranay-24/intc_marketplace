@@ -1,30 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import collections from "@/data/collections.json";
 import questionsData from "@/data/questions.json";
-import { Collection, Product, customerSchema, FormState, CustomerData, Question, ChoiceQuestion } from "@/lib/types";
+import { Collection, Product, FormState, CustomerData, Question, ChoiceQuestion } from "@/lib/types";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import CustomerInfo from "./CustomerInfo";
+import EmbeddedCheckout from "./EmbeddedCheckout";
 
 export default function MultiStepForm() {
   const [step, setStep] = useState(1);
   const [formState, setFormState] = useState<FormState>({});
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CustomerData>({
-    resolver: zodResolver(customerSchema),
-  });
+  const [cartId, setCartId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const selectCollection = (collection: Collection) => {
     setFormState({ ...formState, collection });
@@ -41,10 +35,53 @@ export default function MultiStepForm() {
     setStep(4);
   };
 
-  const onSubmit = (customerInfo: CustomerData) => {
-    const finalFormData = { ...formState, customerInfo };
-    console.log("Final Form Data:", finalFormData);
-    // Here you can handle the form submission
+  const handleCustomerSubmit = async (customerInfo: CustomerData) => {
+    try {
+      if (!formState.product) {
+        throw new Error('No product selected');
+      }
+
+      const response = await fetch('/api/bigcommerce/create-cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lineItems: [
+            {
+             // productId: formState.product.id,
+             // quantity: 1,
+             productId: formState.product.productId,
+             quantity: 1,
+             sku_id: formState.product.sku_id,
+             sku: formState.product.sku,
+             variantId: formState.product.variantId
+            },
+          ]
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create cart');
+      }
+
+      const data = await response.json();
+      setCartId(data.cartId);
+     // console.log(customerInfo);
+     const updatedFormState = { ...formState, customerInfo };
+     setFormState(updatedFormState);
+     
+     // Log the updated state (although this still won't show the updated state)
+    // console.log("Updated form state:", updatedFormState.customerInfo);
+       //console.log(cartId);
+      // console.log(formState.customerInfo);
+     // console.log(formState);
+      setStep(5);
+     
+    } catch (error) {
+      console.error('Error creating cart:', error);
+      setError(`Failed to create cart: ${error.message}`);
+    }
   };
 
   const getQuestionsForCollection = () => {
@@ -55,15 +92,25 @@ export default function MultiStepForm() {
     return collectionQuestions?.questions || [];
   };
 
+  const handleCheckoutComplete = () => {
+    // Handle successful checkout
+    console.log('Checkout completed successfully');
+  };
+
+  const handleCheckoutError = (error: any) => {
+    console.error('Checkout error:', error);
+    setError('An error occurred during checkout. Please try again.');
+  };
+
   return (
     <div className="space-y-8">
       {/* Progress Bar */}
       <div className="flex justify-between mb-8">
-        {[1, 2, 3, 4].map((number) => (
+        {[1, 2, 3, 4, 5].map((number) => (
           <div
             key={number}
             className={`flex items-center ${
-              number !== 4 ? "flex-1" : ""
+              number !== 5 ? "flex-1" : ""
             }`}
           >
             <div
@@ -75,7 +122,7 @@ export default function MultiStepForm() {
             >
               {number}
             </div>
-            {number !== 4 && (
+            {number !== 5 && (
               <div
                 className={`flex-1 h-1 mx-4 ${
                   step > number ? "bg-primary" : "bg-gray-300"
@@ -85,6 +132,13 @@ export default function MultiStepForm() {
           </div>
         ))}
       </div>
+
+      {error && (
+        <div className="p-4 border border-red-200 rounded-lg bg-red-50 mb-4">
+          <p className="text-red-600">{error}</p>
+        </div>
+      )}
+
 
       {/* Step 1: Collection Selection */}
       {step === 1 && (
@@ -208,21 +262,43 @@ export default function MultiStepForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {formState.collection.products.map((product) => (
               <Card
-                key={product.id}
+                key={product.productId}
                 className="p-6 cursor-pointer hover:shadow-lg transition-shadow"
                 onClick={() => selectProduct(product)}
               >
-                <div className="aspect-video relative mb-4">
+                {/* <div className="aspect-video relative mb-4">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="rounded-lg object-cover w-full h-full"
                   />
-                </div>
+                </div> */}
                 <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
                 <p className="text-lg text-primary">
                   ${product.price.toFixed(2)}
                 </p>
+
+                      {/* Benefits List - combining product and collection benefits */}
+                      <div className="mt-4">
+                  <h4 className="font-medium text-gray-700 mb-2">Plan Benefits:</h4>
+                  <ul className="space-y-2">
+                    {/* Product-specific benefits */}
+                    {product.productBenefits && product.productBenefits.map((benefit, index) => (
+                      <li key={`product-${index}`} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                    
+                  {/* Collection common benefits */}
+                      {formState.collection?.commonBenefits?.map((benefit, index) => (
+                      <li key={`common-${index}`} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div> 
               </Card>
             ))}
           </div>
@@ -231,107 +307,20 @@ export default function MultiStepForm() {
 
       {/* Step 4: Customer Information */}
       {step === 4 && (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <Button
-            type="button"
-            variant="ghost"
-            className="mb-4"
-            onClick={() => setStep(3)}
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Products
-          </Button>
+        <CustomerInfo
+          onBack={() => setStep(3)}
+          onSubmit={handleCustomerSubmit}
+        />
+      )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
-              <Input
-                id="fullName"
-                {...register("fullName")}
-                className={errors.fullName ? "border-red-500" : ""}
-              />
-              {errors.fullName && (
-                <p className="text-red-500 text-sm">
-                  {errors.fullName.message as string}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                {...register("email")}
-                className={errors.email ? "border-red-500" : ""}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm">
-                  {errors.email.message as string}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                {...register("phone")}
-                className={errors.phone ? "border-red-500" : ""}
-              />
-              {errors.phone && (
-                <p className="text-red-500 text-sm">
-                  {errors.phone.message as string}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="address">Address</Label>
-              <Input
-                id="address"
-                {...register("address")}
-                className={errors.address ? "border-red-500" : ""}
-              />
-              {errors.address && (
-                <p className="text-red-500 text-sm">
-                  {errors.address.message as string}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="city">City</Label>
-              <Input
-                id="city"
-                {...register("city")}
-                className={errors.city ? "border-red-500" : ""}
-              />
-              {errors.city && (
-                <p className="text-red-500 text-sm">
-                  {errors.city.message as string}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="zipCode">ZIP Code</Label>
-              <Input
-                id="zipCode"
-                {...register("zipCode")}
-                className={errors.zipCode ? "border-red-500" : ""}
-              />
-              {errors.zipCode && (
-                <p className="text-red-500 text-sm">
-                  {errors.zipCode.message as string}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <Button type="submit" className="w-full">
-            Complete Order <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </form>
+      {/* Step 5: Embedded Checkout */}
+      {step === 5 && cartId && formState.customerInfo && (
+        <EmbeddedCheckout
+          cartId={cartId}
+          customerInfo={formState.customerInfo}
+          onCheckoutComplete={handleCheckoutComplete}
+          onCheckoutError={handleCheckoutError}
+        />
       )}
     </div>
   );

@@ -1,23 +1,93 @@
 {
-  "accessCode": "Asdfghjkl!1990",
+ 
   "collections": [
     {
       "id": 1,
       "name": "Accident Insurance",
       "description": "Covers accidental injuries with multiple plan options.",
       "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200",
+      "commonBenefits": [
+        "Hospital Admission: $500 per admission (max 2 per year)",
+        "Hospital Confinement: $200 per admission (max 31 days)",
+        "ER Benefit: $150 per visit (max 2 per year)",
+        "Outpatient Major Surgery: $1,000 per surgery (max 1 per year)",
+        "Outpatient Minor Surgery: $500 per surgery (max 1 per year)",
+        "Major Fracture: $1,000 per fracture (max 1 per year)",
+        "Minor Fracture: $500 per fracture (max 1 per year)",
+        "Doctor Visit: $75 per visit",
+        "Wellness: $50 per visit"
+      ],
       "products": [
         {
-          "id": 101,
-          "name": "Accident Insurance - Plan A",
+          "productId": 112,
+          "name": "Plan A, Individual",
           "price": 14.03,
-          "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1b98?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1b98?auto=format&fit=crop&w=1200",
+          "sku_id": 127,
+          "sku": "PF-00001-PL-IN",
+          "variantId": 78,
+          "productBenefits": [
+           
+          ]
         },
         {
-          "id": 102,
-          "name": "Accident Insurance - Plan B",
+          "productId": 112,
+          "name": "Plan A, Individual+1",
           "price": 20.97,
-          "image": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200",
+          "sku_id": 128,
+          "sku": "PF-00001-PL-IN-1",
+          "variantId": 79,
+          "productBenefits": [
+           
+          ]
+        },
+        {
+          "productId": 112,
+          "name": "Plan A, Family",
+          "price": 20.97,
+          "image": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200",
+          "sku_id": 129,
+          "sku": "PF-00001-PL-FA",
+          "variantId": 80,
+          "productBenefits": [
+           
+          ]
+        }, {
+          "productId": 112,
+          "name": "Plan B, Individual",
+          "price": 14.03,
+          "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1b98?auto=format&fit=crop&w=1200",
+          "sku_id": 130,
+          "sku": "PF-00001-PL-IN-1-1",
+          "variantId": 81,
+          "productBenefits": [
+           
+          ]
+        },
+        {
+          "productId": 112,
+          "name": "Plan B, Individual+1",
+          "price": 20.97,
+          "image": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200",
+          "sku_id": 131,
+          "sku": "PF-00001-PL-IN-1-1-1",
+          "variantId": 82,
+          "productBenefits": [
+           
+          ]
+        },
+        {
+          "productId": 112,
+          "name": "Plan B, Family",
+          "price": 20.97,
+          "image": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200",
+          "sku_id": 132,
+          "sku": "PF-00001-PL-FA-1",
+          "variantId": 83,
+          "productBenefits": [
+           
+          ]
         }
       ]
     },
@@ -26,12 +96,172 @@
       "name": "Cancer Insurance",
       "description": "Provides coverage for cancer treatments and related benefits.",
       "image": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200",
-      "products": [
+
+      "commonBenefits": [
+        "One-time lump sum payment",
+        "Invasive Cancer Benefit: $5,000 ",
+        "Skin Cancer Benefit: $500",
+        "Additional Occurrence benefit (for different cancer types)",
+        "Time without treatment < 2 years: 0% of benefit",
+        "Time without treatment 2-4 years: 50% of benefit",
+        "Time without treatment 5+ years: 100% of benefit"
+      ],
+     "products": [
         {
-          "id": 201,
-          "name": "Cancer Insurance Basic Plan",
+          "productId": 113,
+          "name": "Individual, $5000",
           "price": 50.00,
-          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 133,
+          "sku": "113-IN-50",
+          "variantId": 85,
+          "productBenefits": [
+            "Initial diagnosis benefit of $5,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Individual, $10000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 134,
+          "sku": "113-IN-10",
+          "variantId": 86,
+          "productBenefits": [
+            "Initial diagnosis benefit of $10,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Individual, $15000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 135,
+          "sku": "113-IN-15",
+          "variantId": 87,
+          "productBenefits": [
+            "Initial diagnosis benefit of $15,000"
+           
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Individual, $20000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 136,
+          "sku": "113-IN-20",
+          "variantId": 88,
+          "productBenefits": [
+            "Initial diagnosis benefit of $20,000"
+           
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Individual+1, $5000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 137,
+          "sku": "113-IN-50-1",
+          "variantId": 89,
+          "productBenefits": [
+            "Initial diagnosis benefit of $5,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Individual+1, $10000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 138,
+          "sku": "113-IN-10-1",
+          "variantId": 90,
+          "productBenefits": [
+            "Initial diagnosis benefit of $10,000"
+           
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Individual+1, $15000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 139,
+          "sku": "113-IN-15-1",
+          "variantId": 91,
+          "productBenefits": [
+            "Initial diagnosis benefit of $15,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Individual+1, $20000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 140,
+          "sku": "113-IN-20-1",
+          "variantId": 92,
+          "productBenefits": [
+            "Initial diagnosis benefit of $20,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Family, $5000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 141,
+          "sku": "113-FA-50",
+          "variantId": 93,
+          "productBenefits": [
+            "Initial diagnosis benefit of $5,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Family, $10000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 142,
+          "sku": "113-FA-10",
+          "variantId": 94,
+          "productBenefits": [
+            "Initial diagnosis benefit of $10,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Family, $15000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 143,
+          "sku": "113-FA-15",
+          "variantId": 95,
+          "productBenefits": [
+            "Initial diagnosis benefit of $15,000"
+            
+          ]
+        },
+        {
+          "productId": 113,
+          "name": "Family, $20000",
+          "price": 50.00,
+          "image": "https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?auto=format&fit=crop&w=1200",
+          "sku_id": 144,
+          "sku": "113-FA-20",
+          "variantId": 96,
+          "productBenefits": [
+            "Initial diagnosis benefit of $20,000"
+            
+          ]
         }
       ]
     },
@@ -40,18 +270,90 @@
       "name": "Critical Illness Insurance",
       "description": "Offers critical illness coverage with adjustable benefit amounts.",
       "image": "https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&w=1200",
-      "products": [
+      "commonBenefits": [
+        "Insured Person: $5,000-$25,000 (max 3x face amount)",
+        "Waiting Period: 30-180 days",
+        "Benefit Reduction: 50% reduction at age 70"
+      ],
+     "products": [
         {
-          "id": 301,
-          "name": "Critical Illness - Basic",
+          "productId": 114,
+          "name": "Individual, Tobacco",
           "price": 200.00,
-          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200",
+          "sku_id": 145,
+          "sku": "114-IN-TO",
+          "variantId": 98,
+          "productBenefits": [
+          
+          ]
         },
         {
-          "id": 302,
-          "name": "Critical Illness - Enhanced",
+          "productId": 114,
+          "name": "Individual, Non-Tobacco",
           "price": 300.00,
-          "image": "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=1200",
+          "sku_id": 146,
+          "sku": "114-IN-NO",
+          "variantId": 99,
+          "productBenefits": [
+          
+            
+          ]
+        },
+        {
+          "productId": 114,
+          "name": "Individual+1, Tobacco",
+          "price": 200.00,
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200",
+          "sku_id": 147,
+          "sku": "114-IN-TO-1",
+          "variantId": 100,
+          "productBenefits": [
+           "Spouse: 50%-100% of insured person's face amount (max 3x face amount)"
+            
+          ]
+        },
+        {
+          "productId": 114,
+          "name": "Individual+1, Non-Tobacco",
+          "price": 300.00,
+          "image": "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=1200",
+          "sku_id": 148,
+          "sku": "114-IN-NO-1",
+          "variantId": 101,
+          "productBenefits": [
+           "Spouse: 50%-100% of insured person's face amount (max 3x face amount)"
+            
+          ]
+        },
+        {
+          "productId": 114,
+          "name": "Family, Tobacco",
+          "price": 200.00,
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200",
+          "sku_id": 149,
+          "sku": "114-FA-TO",
+          "variantId": 102,
+          "productBenefits": [
+            "Spouse: 50%-100% of insured person's face amount (max 3x face amount)",
+            "Children: 25%-50% of insured person's face amount (max 3x face amount)"
+            
+          ]
+        },
+        {
+          "productId": 114,
+          "name": "Family, Non-Tobacco",
+          "price": 300.00,
+          "image": "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=1200",
+          "sku_id": 150,
+          "sku": "114-FA-NO",
+          "variantId": 103,
+          "productBenefits": [
+            "Spouse: 50%-100% of insured person's face amount (max 3x face amount)",
+            "Children: 25%-50% of insured person's face amount (max 3x face amount)"
+            
+          ]
         }
       ]
     },
@@ -60,18 +362,100 @@
       "name": "Hospital Indemnity Insurance",
       "description": "Covers hospital admissions and related treatments with various plan options.",
       "image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200",
-      "products": [
+      "commonBenefits": [
+        "Benefits paid directly to you",
+        "No networks - use any hospital",
+        "Guaranteed renewable"
+      ],
+   "products": [
         {
-          "id": 401,
-          "name": "Hospital Indemnity - Plan A",
+          "productId": 115,
+          "name": "Individual, Plan A",
           "price": 750.00,
-          "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200",
+          "sku_id": 151,
+          "sku": "115-IN-PL",
+          "variantId": 105,
+          "productBenefits": [
+            "Hospital Admission: $750 per admission (max 2 per year)",
+            "Hospital Per Day: $150 per day (max 30 days)",
+            "Emergency Room: $100 per visit (max 2 per year)",
+            "Outpatient Surgery: Minor Surgery: $250, Major Surgery: $750 "
+          ]
         },
         {
-          "id": 402,
-          "name": "Hospital Indemnity - Plan B",
+          "productId": 115,
+          "name": "Individual, Plan B",
           "price": 1500.00,
-          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200",
+          "sku_id": 152,
+          "sku": "115-IN-PL-1",
+          "variantId": 106,
+          "productBenefits": [
+            "Hospital Admission: $1,500 per admission",
+            "Hospital Per Day: $200 per day (max 30 days)",
+            "Emergency Room: $150 per visit (max 2 per year)",
+            "Outpatient Surgery: Minor Surgery: $250, Major Surgery: $1,000 "
+          ]
+        },{
+          "productId": 115,
+          "name": "Individual+1, Plan A",
+          "price": 750.00,
+          "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200",
+          "sku_id": 153,
+          "sku": "115-IN-PL-1-1",
+          "variantId": 107,
+          "productBenefits": [
+            "Hospital Admission: $750 per admission (max 2 per year)",
+            "Hospital Per Day: $150 per day (max 30 days)",
+            "Emergency Room: $100 per visit (max 2 per year)",
+            "Outpatient Surgery: Minor Surgery: $250, Major Surgery: $750 "
+          ]
+        },
+        {
+          "productId": 115,
+          "name": "Individual+1, Plan B",
+          "price": 1500.00,
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200",
+          "sku_id": 154,
+          "sku": "115-IN-PL-1-1-1",
+          "variantId": 108,
+          "productBenefits": [
+           "Hospital Admission: $1,500 per admission",
+            "Hospital Per Day: $200 per day (max 30 days)",
+            "Emergency Room: $150 per visit (max 2 per year)",
+            "Outpatient Surgery: Minor Surgery: $250, Major Surgery: $1,000 "
+          ]
+        },
+        {
+          "productId": 115,
+          "name": "Family, Plan A",
+          "price": 750.00,
+          "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200",
+          "sku_id": 155,
+          "sku": "115-FA-PL",
+          "variantId": 109,
+          "productBenefits": [
+            "Hospital Admission: $750 per admission (max 2 per year)",
+            "Hospital Per Day: $150 per day (max 30 days)",
+            "Emergency Room: $100 per visit (max 2 per year)",
+            "Outpatient Surgery: Minor Surgery: $250, Major Surgery: $750 "
+          ]
+        },
+        {
+          "productId": 115,
+          "name": "Family, Plan B",
+          "price": 1500.00,
+          "image": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1200",
+          "sku_id": 156,
+          "sku": "115-FA-PL-1",
+          "variantId": 110,
+          "productBenefits": [
+           "Hospital Admission: $1,500 per admission",
+            "Hospital Per Day: $200 per day (max 30 days)",
+            "Emergency Room: $150 per visit (max 2 per year)",
+            "Outpatient Surgery: Minor Surgery: $250, Major Surgery: $1,000 "
+          ]
         }
       ]
     },
@@ -80,18 +464,38 @@
       "name": "Short Term Accident Sickness Pay",
       "description": "Provides short term benefits for accident or sickness, with salary-based options.",
       "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200",
+      "commonBenefits": [
+        "Income protection during recovery",
+        "Benefit starts on day one of disability",
+        "No physical exam required"
+      ],
       "products": [
         {
-          "id": 501,
+          "productId": 116,
           "name": "Short Term Accident Sickness - Basic",
           "price": 50.00,
-          "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
+          "sku_id": 157,
+          "sku": "116-50",
+          "variantId": 112,
+          "productBenefits": [
+            "60% of salary replacement",
+            "Up to 3 months coverage"
+          ]
         },
         {
-          "id": 502,
+          "productId": 116,
           "name": "Short Term Accident Sickness - Premium",
           "price": 100.00,
-          "image": "https://images.unsplash.com/photo-1612277795421-9bc7706a4a34?auto=format&fit=crop&w=1200"
+          "image": "https://images.unsplash.com/photo-1612277795421-9bc7706a4a34?auto=format&fit=crop&w=1200",
+          "sku_id": 158,
+          "sku": "116-10",
+          "variantId": 113,
+          "productBenefits": [
+            "70% of salary replacement",
+            "Up to 6 months coverage",
+            "Partial disability benefit included"
+          ]
         }
       ]
     }
