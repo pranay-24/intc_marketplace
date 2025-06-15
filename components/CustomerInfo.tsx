@@ -8,18 +8,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 interface CustomerInfoProps {
   onBack: () => void;
   onSubmit: (data: CustomerData) => void;
 }
 
+// Array of US states for the dropdown
+const US_STATES = [
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
+  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
+  "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
+  "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
+  "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", 
+  "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", 
+  "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
+  "District of Columbia"
+];
+
 export default function CustomerInfo({ onBack, onSubmit }: CustomerInfoProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedState, setSelectedState] = useState<string>("");
+  const [stateDropdownOpen, setStateDropdownOpen] = useState(false);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CustomerData>({
    // resolver: zodResolver(customerSchema),
@@ -39,6 +60,14 @@ export default function CustomerInfo({ onBack, onSubmit }: CustomerInfoProps) {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  
+  // Handle state selection
+  const handleStateSelect = (state: string) => {
+    setSelectedState(state);
+    setValue("state", state); // This line was previously commented out
+    setStateDropdownOpen(false);
   };
 
   return (
@@ -139,7 +168,7 @@ export default function CustomerInfo({ onBack, onSubmit }: CustomerInfoProps) {
             )}
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label htmlFor="state">state</Label>
             <Input
               id="state"
@@ -151,7 +180,39 @@ export default function CustomerInfo({ onBack, onSubmit }: CustomerInfoProps) {
                 {errors.state.message}
               </p>
             )}
+          </div> */}
+
+<div className="space-y-2">
+            <Label htmlFor="state">State</Label>
+            <input type="hidden" {...register("state")} />
+            
+            <DropdownMenu open={stateDropdownOpen} onOpenChange={setStateDropdownOpen}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  {selectedState || "Select a state"}
+                  <span className="ml-2">▼</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="max-h-60 overflow-y-auto">
+                {US_STATES.map((state) => (
+                  <DropdownMenuItem
+                    key={state}
+                    onClick={() => handleStateSelect(state)}
+                  >
+                    {state}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            {errors.state && (
+              <p className="text-red-500 text-sm">
+                {errors.state.message}
+              </p>
+            )}
           </div>
+
+
 
           <div className="space-y-2">
             <Label htmlFor="zipCode">ZIP Code</Label>
