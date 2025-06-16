@@ -428,13 +428,13 @@ function getPriceFromTable(
   plan: string, 
   coverageTier: string
 ): number {
-  const insurancePricing = ACCIDENT_PRICING_TABLES[insuranceType];
+  const insurancePricing = ACCIDENT_PRICING_TABLES[insuranceType as keyof typeof ACCIDENT_PRICING_TABLES];
   if (!insurancePricing) return 0;
   
-  const planPricing = insurancePricing[plan];
+  const planPricing = insurancePricing[plan as keyof typeof insurancePricing];
   if (!planPricing) return 0;
   
-  return planPricing[coverageTier] || 0;
+  return planPricing[coverageTier as keyof typeof planPricing] || 0;
 }
 
 
