@@ -140,25 +140,34 @@ export default function FamilyMemberSelector({ coverageType, existingMembers }: 
       isValid = false;
     }
 
-    // Validate each member
-    members.forEach((member, index) => {
-      const requiredFields: (keyof FamilyMember)[] = [
-        'firstName', 'lastName', 'dateOfBirth', 'gender', 'height', 'weight', 'relationship'
-      ];
+  // Validate each member
+members.forEach((member, index) => {
+  const requiredFields: (keyof FamilyMember)[] = [
+    'firstName', 'lastName', 'dateOfBirth', 'gender', 'height', 'weight', 'relationship'
+  ];
 
-      requiredFields.forEach(field => {
-        if (!member[field] || member[field].trim() === '') {
-          newErrors[`${index}_${field}`] = `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} is required`;
-          isValid = false;
-        }
-      });
+  requiredFields.forEach(field => {
+    const value = member[field];
+    
+    // Check if field is empty based on its type
+    const isEmpty = !value || 
+                   (typeof value === 'string' && value.trim() === '') ||
+                   (typeof value === 'number' && (isNaN(value) || value <= 0)) ||
+                   value === null ||
+                   value === undefined;
+    
+    if (isEmpty) {
+      newErrors[`${index}_${field}`] = `${field.replace(/([A-Z])/g, ' $1').toLowerCase()} is required`;
+      isValid = false;
+    }
+  });
 
-      // Validate date of birth format
-      if (member.dateOfBirth && !isValidDate(member.dateOfBirth)) {
-        newErrors[`${index}_dateOfBirth`] = "Please enter a valid date";
-        isValid = false;
-      }
-    });
+  // Validate date of birth format
+  if (member.dateOfBirth && !isValidDate(member.dateOfBirth)) {
+    newErrors[`${index}_dateOfBirth`] = "Please enter a valid date";
+    isValid = false;
+  }
+});
 
     setErrors(newErrors);
     return isValid;
