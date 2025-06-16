@@ -50,7 +50,13 @@ export const validateFamilyMembers = (coverageType: CoverageType, members: Famil
     ];
     
     requiredFields.forEach(field => {
-      if (!member[field] || member[field].trim() === '') {
+      const value = member[field];
+      
+      // Check if field exists and is not empty
+      if (!value || 
+          (typeof value === 'string' && value.trim() === '') ||
+          (typeof value === 'number' && isNaN(value)) ||
+          value === null) {
         errors.push(`Member ${index + 1}: ${field.replace(/([A-Z])/g, ' $1').toLowerCase()} is required`);
       }
     });
