@@ -948,14 +948,14 @@ function getHospitalIndemnityPriceFromTable(
   const insurancePricing = HOSPITAL_INDEMNITY_PRICING_TABLES['Hospital Indemnity'];
   if (!insurancePricing) return 0;
   
-  const planPricing = insurancePricing[plan]; // e.g., 'Plan A' or 'Plan B'
+  const planPricing = insurancePricing[plan as keyof typeof insurancePricing ]; // e.g., 'Plan A' or 'Plan B'
   if (!planPricing) return 0;
   
   const ageBracket = getAgeBracket(age);
-  const agePricing = planPricing[ageBracket];
+  const agePricing = planPricing[ageBracket as keyof typeof planPricing];
   if (!agePricing) return 0;
   
-  return agePricing[coverageType] || 0; // e.g., 'Individual'
+  return agePricing[coverageType as keyof typeof agePricing] || 0; // e.g., 'Individual'
 }
 
 // Hospital Indemnity Insurance Product Selection Logic
@@ -1084,7 +1084,7 @@ function getShortTermPriceFromTable(
   
   console.log('DEBUG - Available benefit periods:', Object.keys(insurancePricing));
   
-  const periodPricing = insurancePricing[benefitPeriod]; // e.g., '14-Day Benefit Period'
+  const periodPricing = insurancePricing[benefitPeriod as keyof typeof insurancePricing]; // e.g., '14-Day Benefit Period'
   if (!periodPricing) {
     console.log('DEBUG - No period pricing found for:', benefitPeriod);
     return 0;
@@ -1093,7 +1093,7 @@ function getShortTermPriceFromTable(
   const ageBracket = getShortTermAgeBracket(age);
   console.log('DEBUG - Age bracket for age', age, ':', ageBracket);
   
-  const agePricing = periodPricing[ageBracket];
+  const agePricing = periodPricing[ageBracket as keyof typeof periodPricing];
   if (!agePricing) {
     console.log('DEBUG - No age pricing found for bracket:', ageBracket);
     return 0;
@@ -1101,7 +1101,7 @@ function getShortTermPriceFromTable(
   
   console.log('DEBUG - Available daily benefits:', Object.keys(agePricing));
   
-  const price = agePricing[dailyBenefit] || 0;
+  const price = agePricing[dailyBenefit as keyof typeof agePricing] || 0;
   console.log('DEBUG - Final price for', dailyBenefit, ':', price);
   
   return price;
@@ -1215,19 +1215,19 @@ function getShortTermAccidentSicknessRecommendation(
 /**
  * Utility function to get the top recommended product for a collection
  */
-export function getTopRecommendation(
-  formData: FormResponse,
-  allProducts: Product[],
-  collectionName: string
-): ProductRecommendation | null {
-  const recommendations = getRecommendedProducts(formData, allProducts, collectionName,collectionsData.collections);
-  return recommendations.length > 0 ? recommendations[0] : null;
-}
+// export function getTopRecommendation(
+//   formData: FormResponse,
+//   allProducts: Product[],
+//   collectionName: string
+// ): ProductRecommendation | null {
+//   const recommendations = getRecommendedProducts(formData, allProducts, collectionName,collectionsData.collections);
+//   return recommendations.length > 0 ? recommendations[0] : null;
+// }
 
 /**
  * Debug function to log extracted user answers
  */
-export function debugUserAnswers(formData: FormResponse, collections: any[]): void {
-  const userAnswers = extractUserAnswers(formData,collections);
-  console.log('Extracted User Answers:', userAnswers);
-}
+// export function debugUserAnswers(formData: FormResponse, collections: any[]): void {
+//   const userAnswers = extractUserAnswers(formData,collections);
+//   console.log('Extracted User Answers:', userAnswers);
+// }
