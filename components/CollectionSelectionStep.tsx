@@ -9,7 +9,7 @@ export default function CollectionSelectionStep() {
 
   const selectCollection = async (collection: any) => {
     updateFormData({ 
-      collectionId: collection.id,
+      collectionId: collection.id.toString(),
       collectionName: collection.name,
       // Keep the full collection object for compatibility if needed elsewhere
       collection: collection
@@ -36,7 +36,7 @@ export default function CollectionSelectionStep() {
           <Card
             key={collection.id}
             className={`p-6 cursor-pointer hover:shadow-lg transition-shadow text-center ${
-              formData.collectionId === collection.id ? 'ring-2 ring-primary' : ''
+              formData.collectionId === collection.id.toString() ? 'ring-2 ring-primary' : ''
             }`}
             onClick={() => selectCollection(collection)}
           >
