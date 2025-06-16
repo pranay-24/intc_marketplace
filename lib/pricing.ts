@@ -819,10 +819,10 @@ function getCriticalIllnessPriceFromTable(
   if (!tobaccoPricing) return 0;
   
   const ageBracket = getAgeBracket(age);
-  const agePricing = tobaccoPricing[ageBracket];
+  const agePricing = tobaccoPricing[ageBracket as keyof typeof tobaccoPricing];
   if (!agePricing) return 0;
   
-  const baseRate = agePricing[coverageType] || 0;
+  const baseRate = agePricing[coverageType as keyof typeof agePricing] || 0;
   
   // Calculate multiplier based on coverage amount
   const multiplier = getCriticalIllnessCoverageMultiplier(coverageAmount);
