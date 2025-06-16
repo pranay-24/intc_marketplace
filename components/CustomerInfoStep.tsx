@@ -49,10 +49,12 @@ export default function CustomerInfoStep() {
 
 // Option 1: Using an immediately invoked function expression (IIFE)
 const fixedCoverageType: CoverageType | undefined = (() => {
+
+  
    // Get coverage type from previous answers
   const coverageType: CoverageType | undefined = getMembers(formData);
 
-  const rawAnswer = coverageType; // adjust key as needed
+  const rawAnswer = coverageType  as string;; // adjust key as needed
   
   if (rawAnswer === 'Just me') return 'just-me';
   if (rawAnswer === 'Me + 1') return 'me+1';
@@ -180,7 +182,7 @@ const fixedCoverageType: CoverageType | undefined = (() => {
       } else {
         throw new Error('Cart creation failed - no cart ID received');
       }
-      
+
 
       // Move to next step in main flow
       //nextStep();
