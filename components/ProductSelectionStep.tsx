@@ -14,6 +14,7 @@ export default function ProductSelectionStep() {
   // Get recommended products (filtered and sorted by match score)
   const recommendedProducts = useMemo(() => {
     const products = formData.collection?.products || [];
+    console.log(formData.collectionName);
     return getRecommendedProducts(formData, formData.collectionName!);
   }, [formData]);
 

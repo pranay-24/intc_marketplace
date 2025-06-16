@@ -261,7 +261,7 @@ const HOSPITAL_INDEMNITY_PRICING_TABLES = {
 // Pricing tables for Short Term Accident / Sickness Pay insurance
 const SHORT_TERM_PRICING_TABLES = {
   'Short Term Accident/Sickness Pay': {
-    '14-Day Benefit Period': {
+    '14-Day': {
       '17-29': {
         '$50/Day': 7.77,
         '$100/Day': 15.44,
@@ -293,7 +293,7 @@ const SHORT_TERM_PRICING_TABLES = {
         '$200/Day': 107.58
       }
     },
-    '30-Day Benefit Period': {
+    '30-Day': {
       '17-29': {
         '$50/Day': 14.31,
         '$100/Day': 28.82,
@@ -325,7 +325,7 @@ const SHORT_TERM_PRICING_TABLES = {
         '$200/Day': 210.71
       }
     },
-    '60-Day Benefit Period': {
+    '60-Day': {
       '17-29': {
         '$50/Day': 22.23,
         '$100/Day': 44.38,
@@ -574,7 +574,7 @@ export function getRecommendedProducts(
 
   // Extract products from the specific collection
   const collectionProducts = targetCollection.products || [];
-
+//console.log(collectionProducts )
   switch (collectionName) {
     case 'Accident Insurance':
       return getAccidentInsuranceRecommendation(userAnswers, collectionProducts);
@@ -1074,35 +1074,35 @@ function getShortTermPriceFromTable(
   dailyBenefit: string,
   age: number
 ): number {
-  console.log('DEBUG - Input parameters:', { benefitPeriod, dailyBenefit, age });
+  //console.log('DEBUG - Input parameters:', { benefitPeriod, dailyBenefit, age });
   
   const insurancePricing = SHORT_TERM_PRICING_TABLES['Short Term Accident/Sickness Pay'];
   if (!insurancePricing) {
-    console.log('DEBUG - No insurance pricing found');
+    //console.log('DEBUG - No insurance pricing found');
     return 0;
   }
   
-  console.log('DEBUG - Available benefit periods:', Object.keys(insurancePricing));
+ // console.log('DEBUG - Available benefit periods:', Object.keys(insurancePricing));
   
   const periodPricing = insurancePricing[benefitPeriod as keyof typeof insurancePricing]; // e.g., '14-Day Benefit Period'
   if (!periodPricing) {
-    console.log('DEBUG - No period pricing found for:', benefitPeriod);
+    //console.log('DEBUG - No period pricing found for:', benefitPeriod);
     return 0;
   }
   
   const ageBracket = getShortTermAgeBracket(age);
-  console.log('DEBUG - Age bracket for age', age, ':', ageBracket);
+  //console.log('DEBUG - Age bracket for age', age, ':', ageBracket);
   
   const agePricing = periodPricing[ageBracket as keyof typeof periodPricing];
   if (!agePricing) {
-    console.log('DEBUG - No age pricing found for bracket:', ageBracket);
+    //console.log('DEBUG - No age pricing found for bracket:', ageBracket);
     return 0;
   }
   
-  console.log('DEBUG - Available daily benefits:', Object.keys(agePricing));
+  //console.log('DEBUG - Available daily benefits:', Object.keys(agePricing));
   
   const price = agePricing[dailyBenefit as keyof typeof agePricing] || 0;
-  console.log('DEBUG - Final price for', dailyBenefit, ':', price);
+  //console.log('DEBUG - Final price for', dailyBenefit, ':', price);
   
   return price;
 }
@@ -1116,13 +1116,13 @@ function getShortTermAccidentSicknessRecommendation(
   if (collectionProducts.length === 0) {
     return [];
   }
-  
+  //console.log(collectionProducts)
   // Get user age
   const userAge = userAnswers.age || 25; // Default age if not provided
   const ageReason = `Based on age ${userAge}`;
   
   // Get daily benefit directly from user answers
-  let dailyBenefit = userAnswers.dailyBenefit || '$50/Day'; // Default daily benefit if not provided
+  let dailyBenefit = userAnswers.dailyBenefit || '$50'; // Default daily benefit if not provided
   
   // Normalize the daily benefit format to match pricing table (ensure uppercase 'D' in 'Day')
   if (dailyBenefit && typeof dailyBenefit === 'string') {
@@ -1131,42 +1131,64 @@ function getShortTermAccidentSicknessRecommendation(
   
   const dailyBenefitReason = `Selected daily benefit of ${dailyBenefit}`;
   
-  console.log('DEBUG - Original dailyBenefit:', userAnswers.dailyBenefit);
-  console.log('DEBUG - Normalized dailyBenefit:', dailyBenefit);
+  //console.log('DEBUG - Original dailyBenefit:', userAnswers.dailyBenefit);
+  //console.log('DEBUG - Normalized dailyBenefit:', dailyBenefit);
   
   // Determine benefit period from user answers (if available) or use default
-  let benefitPeriod = '14-Day Benefit Period'; // Default
+  let benefitPeriod = '14-Day'; // Default
   let periodReason = '14-day benefit period selected for basic coverage';
   
-  console.log('DEBUG - userAnswers.benefitPeriod:', userAnswers.benefitPeriod);
+  //console.log('DEBUG - userAnswers.benefitPeriod:', userAnswers.benefitPeriod);
   
   if (userAnswers.benefitPeriod) {
     if (userAnswers.benefitPeriod.includes('60') || userAnswers.benefitPeriod === '60-Day Benefit Period') {
-      benefitPeriod = '60-Day Benefit Period';
+      benefitPeriod = '60-Day';
       periodReason = '60-day benefit period selected for maximum coverage duration';
-      console.log('DEBUG - Set to 60-day period');
+     // console.log('DEBUG - Set to 60-day period');
     } else if (userAnswers.benefitPeriod.includes('30') || userAnswers.benefitPeriod === '30-Day Benefit Period') {
-      benefitPeriod = '30-Day Benefit Period';
+      benefitPeriod = '30-Day';
       periodReason = '30-day benefit period selected for extended coverage';
-      console.log('DEBUG - Set to 30-day period');
+      //console.log('DEBUG - Set to 30-day period');
     } else if (userAnswers.benefitPeriod.includes('14') || userAnswers.benefitPeriod === '14-Day Benefit Period') {
-      benefitPeriod = '14-Day Benefit Period';
+      benefitPeriod = '14-Day';
       periodReason = '14-day benefit period selected for basic coverage';
-      console.log('DEBUG - Set to 14-day period');
+     // console.log('DEBUG - Set to 14-day period');
     }
   }
   
-  console.log('DEBUG - Final benefitPeriod:', benefitPeriod);
+  //console.log('DEBUG - Final benefitPeriod:', benefitPeriod);
   
   // Get price from pricing table using the dedicated short term function
   const price = getShortTermPriceFromTable(benefitPeriod, dailyBenefit, userAge);
-  
+   //console.log(price)
   // Find the matching product based on benefit period and daily benefit
-  let selectedProduct = collectionProducts.find(product => 
-    product.name.includes(benefitPeriod.replace(' Benefit Period', '')) && 
-    product.name.includes(dailyBenefit.replace('/Day', ''))
-  );
-  
+//   let selectedProduct = collectionProducts.find(product => {
+//     console.log(product.name)
+// product.name.includes(benefitPeriod.replace('-day', '')) && 
+//     product.name.includes(dailyBenefit.replace('$', ''))
+//   }
+    
+//   );
+
+  // Find the matching product - FIXED LOGIC
+  let selectedProduct = collectionProducts.find(product => {
+    //console.log('Checking product:', product.name);
+    
+    // Extract benefit amount from dailyBenefit (e.g., "$50/Day" -> "50")
+    const benefitAmount = dailyBenefit.replace(/[$\/Day]/g, '');
+    
+    // Extract period number from benefitPeriod (e.g., "14-Day" -> "14")
+    const periodNumber = benefitPeriod.replace('-Day', '');
+    
+    // Check if product name contains both the benefit amount and period
+    // Product names in JSON are like: "$50, 14-day", "$100, 30-day", etc.
+    const matchesBenefit = product.name.includes(`$${benefitAmount}`);
+    const matchesPeriod = product.name.includes(`${periodNumber}-day`);
+    
+    return matchesBenefit && matchesPeriod;
+  });
+
+ // console.log(selectedProduct?.name)
   if (selectedProduct) {
     return [{
       product: {

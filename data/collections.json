@@ -472,7 +472,7 @@
       "products": [
         {
           "productId": 116,
-          "name": "Benefit $50, 14-day benefit period ",
+          "name": "$50, 14-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 250,
@@ -485,7 +485,7 @@
         },
         {
           "productId": 116,
-          "name": "Benefit $50, 14-day benefit period ",
+          "name": "$50, 30-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 251,
@@ -498,7 +498,7 @@
         },
         {
           "productId": 116,
-          "name": "Benefit $50, 60-day benefit period ",
+          "name": "$50, 60-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 252,
@@ -511,7 +511,7 @@
         },
           {
           "productId": 116,
-          "name": "Benefit $100, 14-day benefit period ",
+          "name": "$100, 14-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 253,
@@ -524,7 +524,7 @@
         },
           {
           "productId": 116,
-          "name": "Benefit $100, 30-day benefit period ",
+          "name": "$100, 30-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 254,
@@ -538,7 +538,7 @@
 
            {
           "productId": 116,
-          "name": "Benefit $100, 60-day benefit period ",
+          "name": "$100, 60-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 255,
@@ -551,7 +551,7 @@
         },
            {
           "productId": 116,
-          "name": "Benefit $150, 14-day benefit period ",
+          "name": "$150, 14-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 256,
@@ -564,7 +564,7 @@
         },
             {
           "productId": 116,
-          "name": "Benefit $150, 30-day benefit period ",
+          "name": "$150, 30-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 257,
@@ -577,7 +577,7 @@
         },
              {
           "productId": 116,
-          "name": "Benefit $150, 60-day benefit period ",
+          "name": "$150, 60-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 258,
@@ -590,7 +590,7 @@
         },
                {
           "productId": 116,
-          "name": "Benefit $200, 14-day benefit period ",
+          "name": "$200, 14-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 259,
@@ -603,7 +603,7 @@
         },
                  {
           "productId": 116,
-          "name": "Benefit $200, 30-day benefit period ",
+          "name": "$200, 30-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 260,
@@ -617,7 +617,7 @@
 
                  {
           "productId": 116,
-          "name": "Benefit $200, 60-day benefit period ",
+          "name": "$200, 60-day",
           "price": 50.00,
           "image": "https://images.unsplash.com/photo-1583324113626-70df0f4deaab?auto=format&fit=crop&w=1200",
           "sku_id": 261,

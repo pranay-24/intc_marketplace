@@ -38,7 +38,7 @@
             "question": "Who do you want to cover under this plan?",
              "questionName":"coverageType",
             "isCoverageQuestion":"yes",
-            "type": "multi_choice",
+            "type": "single_choice",
             "options": ["Just me", "Me + 1","My Family"],
             "required": true
           },
