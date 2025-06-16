@@ -683,14 +683,14 @@ function getCancerPriceFromTable(
   const insurancePricing = CANCER_PRICING_TABLES['Cancer Insurance'];
   if (!insurancePricing) return 0;
   
-  const amountPricing = insurancePricing[coverageAmount]; // e.g., '$5000'
+  const amountPricing = insurancePricing[coverageAmount as keyof typeof insurancePricing]; // e.g., '$5000'
   if (!amountPricing) return 0;
   
   const ageBracket = getAgeBracket(age);
-  const agePricing = amountPricing[ageBracket];
+  const agePricing = amountPricing[ageBracket as keyof typeof amountPricing];
   if (!agePricing) return 0;
   
-  return agePricing[coverageType] || 0; // e.g., 'Individual'
+  return agePricing[coverageType as keyof typeof agePricing] || 0; // e.g., 'Individual'
 }
 
 // Cancer Insurance Product Selection Logic
