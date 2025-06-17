@@ -7,6 +7,9 @@ import { Product,ProductRecommendation  } from '@/lib/pricing';
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { getRecommendedProducts} from  '@/lib/pricing';
+import { ArrowRight } from 'lucide-react';
+
+
 
 export default function ProductSelectionStep() {
   const { formData, updateFormData, nextStep, saveProgress, prevStep } = useForm();
@@ -32,9 +35,19 @@ export default function ProductSelectionStep() {
     try {
       //console.log(product);
       await saveProgress();
-      nextStep();
+      // nextStep();
     } catch (error) {
       console.error('Error saving product selection:', error);
+      // You might want to show an error message to the user here
+    }
+  };
+
+   const onSubmit = async () => {
+    try {
+      await saveProgress();
+      nextStep();
+    } catch (error) {
+      console.error('Error saving progress:', error);
       // You might want to show an error message to the user here
     }
   };
@@ -111,6 +124,15 @@ export default function ProductSelectionStep() {
           );
         })}
       </div>
+      <Button 
+        type="submit" 
+        className="w-full"
+        disabled={!formData.selectedProduct}
+         onClick={onSubmit}
+      >
+        Continue <ArrowRight className="ml-2 h-4 w-4" />
+      </Button>
+
     </div>
   );
 }

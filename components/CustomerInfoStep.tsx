@@ -216,7 +216,7 @@ const fixedCoverageType: CoverageType | undefined = (() => {
               </Button>
 
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2">Lets get your information</h2>
+          <h2 className="text-2xl font-bold mb-2">Lets get your personal information</h2>
         </div>
 
         <div className="space-y-6">
@@ -248,6 +248,59 @@ const fixedCoverageType: CoverageType | undefined = (() => {
                 </p>
               )}
             </div>
+
+             <div className="space-y-2">
+              <Label htmlFor="dateOfBirth">Date of Birth</Label>
+              <Input
+                id="dateOfBirth"
+                type="date"
+                {...register("dateOfBirth")}
+                className={errors.dateOfBirth ? "border-red-500" : ""}
+              />
+              {errors.dateOfBirth && (
+                <p className="text-red-500 text-sm">
+                  {errors.dateOfBirth.message}
+                </p>
+              )}
+            </div>
+
+             <div className="space-y-2">
+              <Label htmlFor="weight">Weight (lbs)</Label>
+              <Input
+                id="weight"
+                type="number"
+                step="0.1"
+                placeholder="e.g., 150"
+                {...register("weight")}
+                className={errors.weight ? "border-red-500" : ""}
+              />
+              {errors.weight && (
+                <p className="text-red-500 text-sm">
+                  {errors.weight.message}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="height">Height</Label>
+              <Input
+                id="height"
+                placeholder="e.g., 5'8&quot; or 68 inches"
+                {...register("height")}
+                className={errors.height ? "border-red-500" : ""}
+              />
+              {errors.height && (
+                <p className="text-red-500 text-sm">
+                  {errors.height.message}
+                </p>
+              )}
+              <p className="text-xs text-gray-500">
+                You can enter as feet and inches (5&apos;8&quot;) 
+              </p>
+            </div>
+
+
+
           </div>
 
           <Button 

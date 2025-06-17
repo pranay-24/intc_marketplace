@@ -68,7 +68,7 @@
 // }
 
 import { z } from "zod";
-
+import {InsuranceBenefits} from '@/lib/calculateBenefits'
 // Product interface
 export interface Product {
   productId: number;
@@ -99,6 +99,25 @@ export const customerSchema = z.object({
   city: z.string().min(2, "City must be at least 2 characters"),
   state: z.string().min(2, "State must be at least 2 characters"),
   zipCode: z.string().min(5, "ZIP code must be at least 5 characters"),
+
+   dateOfBirth: z.string().min(1, "Date of birth is required").refine((date) => {
+    const parsedDate = new Date(date);
+    const today = new Date();
+    const age = today.getFullYear() - parsedDate.getFullYear();
+    return !isNaN(parsedDate.getTime()) && age >= 0 && age <= 120;
+  }, "Please enter a valid date of birth"),
+  
+  weight: z.string().min(1, "Weight is required").refine((weight) => {
+    const weightNum = parseFloat(weight);
+    return !isNaN(weightNum) && weightNum > 0 && weightNum <= 1000;
+  }, "Please enter a valid weight (in lbs)"),
+  
+  height: z.string().min(1, "Height is required").refine((height) => {
+    // Accept formats like "5'8"", "5'8", "68", "5 ft 8 in", etc.
+    const heightRegex = /^(\d{1,2})'?\s*(\d{1,2})"?$|^\d{1,3}$/;
+    return heightRegex.test(height.trim());
+  }, "Please enter a valid height (e.g., 5'8\" or 68 inches)")
+
 });
 
 export type CustomerData = z.infer<typeof customerSchema>;
@@ -155,6 +174,8 @@ export interface FormResponse {
   
    familyMembers?: FamilyMember[];
    
+   benefits?: InsuranceBenefits;
+
   // Checkout step
   cartId?: string;
   checkoutUrl?: string;

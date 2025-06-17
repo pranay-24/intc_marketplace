@@ -10,6 +10,7 @@ interface FormContextType {
   formData: Partial<FormResponse>;
   currentStep: number;
   steps: StepConfig[];
+  allSteps: StepConfig[]; 
   user: User | null;
   isLoading: boolean;
   updateFormData: (data: Partial<FormResponse>) => void;
@@ -147,7 +148,7 @@ export function FormProvider({ children, steps }: { children: React.ReactNode; s
   };
 
   const nextStep = () => {
-    const visibleSteps = steps.filter(step => step.isVisible(state.formData));
+   // const visibleSteps = steps.filter(step => step.isVisible(state.formData));
     if (state.currentStep < visibleSteps.length - 1) {
       dispatch({ type: 'SET_STEP', payload: state.currentStep + 1 });
     }
@@ -208,7 +209,8 @@ export function FormProvider({ children, steps }: { children: React.ReactNode; s
     <FormContext.Provider value={{
       formData: state.formData,
       currentStep: state.currentStep,
-      steps: steps.filter(step => step.isVisible(state.formData)),
+     steps: visibleSteps, 
+      allSteps: steps,
       user: state.user,
       isLoading: state.isLoading,
       updateFormData,

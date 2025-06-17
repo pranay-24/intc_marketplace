@@ -55,6 +55,7 @@ export default function EmbeddedCheckoutStep() {
         state: formData.customerInfo?.state,
         zipCode: formData.customerInfo?.zipCode,
       };
+ //console.log( customerData )
 
       const response = await fetch('/api/bigcommerce/checkout', {
         method: 'POST',

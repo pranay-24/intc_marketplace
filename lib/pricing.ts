@@ -2,6 +2,7 @@ import { FormResponse } from '@/lib/types';
 // Import your collections data
 import collectionsData from '@/data/collections.json';
 import questionCollectionsData from '@/data/questions.json';
+import {getAccidentInsuranceBenefits,AccidentBenefits , InsuranceBenefits} from '@/lib/calculateBenefits'
 
 // Define interfaces (remove duplicate Product interface)
 export interface Product {
@@ -19,6 +20,7 @@ export interface ProductRecommendation {
   product: Product;
   reason: string;
   price: number;
+  benefits?: AccidentBenefits[keyof AccidentBenefits] | InsuranceBenefits;
 }
 
 export interface UserAnswers {
@@ -34,7 +36,7 @@ export interface UserAnswers {
 }
 
 
-interface ProductCollection {
+export interface ProductCollection {
   id: number;
   name: string;
   description: string;
@@ -47,7 +49,7 @@ export interface ProductCatalog {
   collections: ProductCollection[];
 }
 
-interface Question {
+export interface Question {
   id: string;
   question: string;
   questionName?: string;
@@ -58,12 +60,12 @@ interface Question {
   required: boolean;
 }
 
-interface QuestionCollection {
+export interface QuestionCollection {
   collectionName: string;
   questions: Question[];
 }
 
-interface InsuranceFormData {
+ export interface InsuranceFormData {
   collections: QuestionCollection[];
 }
 
@@ -439,7 +441,7 @@ function getPriceFromTable(
 
 
 // Helper function to find question ID by questionName across all collections
-function findQuestionIdByName(collections: QuestionCollection[], questionName: string): string | null {
+export function findQuestionIdByName(collections: QuestionCollection[], questionName: string): string | null {
   for (const collection of collections) {
     for (const question of collection.questions) {
       if (question.questionName === questionName) {
@@ -451,7 +453,7 @@ function findQuestionIdByName(collections: QuestionCollection[], questionName: s
 }
 
 // Helper function to find all question IDs by questionName,so ids is found using questionNames
-function findAllQuestionIdsByName(collections: QuestionCollection[], questionName: string): string[] {
+export function findAllQuestionIdsByName(collections: QuestionCollection[], questionName: string): string[] {
   const ids: string[] = [];
   for (const collection of collections) {
     for (const question of collection.questions) {
@@ -464,7 +466,7 @@ function findAllQuestionIdsByName(collections: QuestionCollection[], questionNam
 }
 
 // Helper function to get first available answer from multiple question IDs
-function getAnswerFromIds(questionsAnswers: any, ids: string[]): any {
+export function getAnswerFromIds(questionsAnswers: any, ids: string[]): any {
   for (const id of ids) {
     if (questionsAnswers[id] !== undefined && questionsAnswers[id] !== null) {
       return questionsAnswers[id];
@@ -474,7 +476,7 @@ function getAnswerFromIds(questionsAnswers: any, ids: string[]): any {
 }
 
 // Updated helper function to handle multiple IDs for numeric answers
-function getNumericAnswer(questionsAnswers: any, ids: string[]): number | undefined {
+export function getNumericAnswer(questionsAnswers: any, ids: string[]): number | undefined {
   for (const id of ids) {
     const answer = questionsAnswers[id];
     if (answer !== undefined && answer !== null) {
@@ -636,6 +638,10 @@ function getAccidentInsuranceRecommendation(
   // Get price from pricing table
   const price = getPriceFromTable('Accident Insurance', selectedPlan, coverageTier);
   
+  // Get benefits for the selected plan
+  const benefits = getAccidentInsuranceBenefits(selectedPlan);
+
+
   // Find the matching product
   let selectedProduct = collectionProducts.find(product => 
     product.name.includes(selectedPlan) && 
@@ -649,15 +655,21 @@ function getAccidentInsuranceRecommendation(
         price: price // Override with pricing table price
       },
       price: price,
-      reason: `${planReason}. ${coverageReason}.`
+      reason: `${planReason}. ${coverageReason}.`,
+      benefits: benefits
     }];
   }
   
   // Fallback - use first product
+  const fallbackBenefits = getAccidentInsuranceBenefits('Plan A');
+  
+
+  // Fallback - use first product
   return [{
     product: collectionProducts[0],
     price: getPriceFromTable('Accident Insurance', 'Plan A', 'Individual'),
-    reason: 'Basic accident insurance product selected'
+    reason: 'Basic accident insurance product selected',
+     benefits: fallbackBenefits
   }];
 }
 /**
