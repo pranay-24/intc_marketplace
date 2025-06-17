@@ -3,6 +3,8 @@ import React from 'react';
 import { useForm } from '@/contexts/FormContext';
 import collections from '@/data/collections.json';
 import { Card } from '@/components/ui/card';
+import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function CollectionSelectionStep() {
   const { formData, updateFormData, nextStep, saveProgress } = useForm();
@@ -17,13 +19,23 @@ export default function CollectionSelectionStep() {
     
     try {
       await saveProgress();
-      nextStep();
+     
     } catch (error) {
       console.error('Error saving collection selection:', error);
       // You might want to show an error message to the user here
     }
   };
 
+  const onSubmit = async () => {
+    try {
+      await saveProgress();
+      nextStep();
+    } catch (error) {
+      console.error('Error saving progress:', error);
+      // You might want to show an error message to the user here
+    }
+  };
+  
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -45,6 +57,14 @@ export default function CollectionSelectionStep() {
           </Card>
         ))}
       </div>
+      <Button 
+        type="submit" 
+        className="w-full"
+        disabled={!formData.collectionId}
+         onClick={onSubmit}
+      >
+        Continue <ArrowRight className="ml-2 h-4 w-4" />
+      </Button>
     </div>
   );
 }

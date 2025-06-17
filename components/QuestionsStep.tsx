@@ -1,5 +1,5 @@
 "use client";  
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { useForm } from '@/contexts/FormContext';
 import QuestionRenderer from '@/components/QuestionRenderer';
 import questionsData from '@/data/questions.json';
@@ -11,6 +11,16 @@ import ShortTermAccidentQuestionRenderer from '@/components/ShortTermAccidentQue
 
 export default function QuestionsStep() {
   const { formData, updateFormData, nextStep, prevStep, saveProgress, resetForm } = useForm();
+const [shouldAdvanceStep, setShouldAdvanceStep] = useState(false);
+ // Use useEffect to handle step advancement after form data is updated
+  useEffect(() => {
+    if (shouldAdvanceStep && formData.questionsAnswers) {
+      console.log('Advancing step due to form data update');
+      nextStep();
+      setShouldAdvanceStep(false);
+    }
+  }, [formData.questionsAnswers, shouldAdvanceStep, nextStep]);
+
 
   // const getQuestionsForCollection = () => {
   //   if (!formData.collectionName) return [];
@@ -80,17 +90,36 @@ const getQuestionsForCollection = () => {
     return collectionQuestions?.questions || [];
   };
 
+  // const handleSubmit = async (answers: Record<string, any>) => {
+  //   updateFormData({ questionsAnswers: answers });
+    
+  //   try {
+  //     await saveProgress();
+  //     nextStep();
+  //   } catch (error) {
+  //     console.error('Error saving questions:', error);
+  //     // You might want to show an error message to the user here
+  //   }
+  // };
+
   const handleSubmit = async (answers: Record<string, any>) => {
+    console.log('=== handleSubmit called ===');
+    
+    // Update form data
     updateFormData({ questionsAnswers: answers });
     
     try {
+      // Save progress
       await saveProgress();
-      nextStep();
+      
+      // Set flag to advance step (will be handled by useEffect)
+      setShouldAdvanceStep(true);
+      
     } catch (error) {
       console.error('Error saving questions:', error);
-      // You might want to show an error message to the user here
     }
   };
+
 
   const questions = getQuestionsForCollection();
  const isShortTermAccident = formData.collectionName === "Short Term Accident/Sickness Pay";

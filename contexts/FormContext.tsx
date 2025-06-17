@@ -48,6 +48,8 @@ export function FormProvider({ children, steps }: { children: React.ReactNode; s
     isLoading: true,
   });
 
+  const visibleSteps = steps.filter(step => step.isVisible(state.formData));
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       dispatch({ type: 'SET_USER', payload: user });
