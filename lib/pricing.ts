@@ -450,7 +450,7 @@ function findQuestionIdByName(collections: QuestionCollection[], questionName: s
   return null;
 }
 
-// Helper function to find all question IDs by questionName
+// Helper function to find all question IDs by questionName,so ids is found using questionNames
 function findAllQuestionIdsByName(collections: QuestionCollection[], questionName: string): string[] {
   const ids: string[] = [];
   for (const collection of collections) {

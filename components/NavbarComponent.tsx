@@ -47,7 +47,7 @@ function NavbarContent() {
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center">
+              <Link href=" https://insuriana-frontend-core.vercel.app/" className="flex items-center">
                 <Image
                   src="https://res.cloudinary.com/dsncwuizo/image/upload/v1749592777/Logo_insuriana_h2031u.svg" 
                   alt="Logo"

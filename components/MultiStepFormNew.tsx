@@ -7,7 +7,7 @@ import CollectionSelectionStep from '@/components/CollectionSelectionStep';
 import QuestionsStep from '@/components/QuestionsStep';
 import ProductSelectionStep from '@/components/ProductSelectionStep';
 import CustomerInfoStep from '@/components/CustomerInfoStep';
-import CheckoutStep from '@/components/CheckoutStep';
+import EmbeddedCheckoutStep from '@/components/CheckoutStep';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
@@ -45,7 +45,7 @@ const steps = [
   {
     id: 'checkout',
     title: 'Checkout',
-    component: CheckoutStep,
+    component: EmbeddedCheckoutStep,
     isRequired: true,
     isVisible: (formData: any) => !!formData.customerInfo,
   },
