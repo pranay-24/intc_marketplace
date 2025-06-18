@@ -2,7 +2,12 @@ import { FormResponse } from '@/lib/types';
 // Import your collections data
 import collectionsData from '@/data/collections.json';
 import questionCollectionsData from '@/data/questions.json';
-import {getAccidentInsuranceBenefits,AccidentBenefits , InsuranceBenefits} from '@/lib/calculateBenefits'
+import {getAccidentInsuranceBenefits , getCancerInsuranceBenefits, getHospitalIndemnityInsuranceBenefits,getCriticalIllnessBenefits,getShortTermBenefits } from '@/lib/calculateBenefits'
+import {AccidentPlanBenefits } from '@/components/AccidentBenefitsRenderer'
+import { CancerPlanBenefits } from '@/components/CancerBenefitsRenderer'
+import {HospitalIndemnityPlanBenefits   } from '@/components/HospitalIndemnityBenefitsRenderer'
+import {CriticalIllnessPlanBenefits } from '@/components/CriticalIllnessBenefitsRenderer'
+import {ShortTermPlanBenefits } from '@/components/ShortTermBenefitsRenderer'
 
 // Define interfaces (remove duplicate Product interface)
 export interface Product {
@@ -16,11 +21,19 @@ export interface Product {
   productBenefits: string[];
 }
 
+export type PlanBenefits = 
+  | AccidentPlanBenefits 
+  | CancerPlanBenefits 
+  | HospitalIndemnityPlanBenefits 
+  | CriticalIllnessPlanBenefits
+  |ShortTermPlanBenefits 
+
+
 export interface ProductRecommendation {
   product: Product;
   reason: string;
   price: number;
-  benefits?: AccidentBenefits[keyof AccidentBenefits] | InsuranceBenefits;
+   benefits?: PlanBenefits;
 }
 
 export interface UserAnswers {
@@ -763,6 +776,10 @@ function getCancerInsuranceRecommendation(
   // Get price from pricing table using the dedicated cancer function
   const price = getCancerPriceFromTable(selectedCoverageAmount, coverageTier, userAge);
   
+   // Get benefits for the selected plan
+  const benefits = getCancerInsuranceBenefits(selectedCoverageAmount, userAnswers.coverageType);
+
+
   // Find the matching product based on coverage tier and amount
   let selectedProduct = collectionProducts.find(product => 
     product.name.includes(coverageTier) && 
@@ -776,10 +793,13 @@ function getCancerInsuranceRecommendation(
         price: price // Override with pricing table price
       },
       price: price,
-      reason: `${amountReason}. ${coverageReason}. ${ageReason}.`
+      reason: `${amountReason}. ${coverageReason}. ${ageReason}.`,
+      benefits: benefits
     }];
   }
   
+  const fallbackBenefits = getCancerInsuranceBenefits('$5000','Just Me');
+
   // Fallback - use first product or create a basic recommendation
   const fallbackProduct = collectionProducts[0] || {
     productId: 0,
@@ -798,7 +818,8 @@ function getCancerInsuranceRecommendation(
       price: price
     },
     price: price,
-    reason: `${amountReason}. ${coverageReason}. ${ageReason}.`
+    reason: `${amountReason}. ${coverageReason}. ${ageReason}.`,
+    benefits:fallbackBenefits
   }];
 }
 /**
@@ -908,6 +929,24 @@ function getCriticalIllnessRecommendation(
   // Get price from pricing table using the dedicated critical illness function
   const price = getCriticalIllnessPriceFromTable(selectedCoverageAmount, coverageTier, userAge, tobaccoUse);
   
+  const cleanCoverageAmount = selectedCoverageAmount.replace(/[,$]/g, '');
+    const numericCoverageAmount = parseInt(cleanCoverageAmount, 10);
+
+
+  //  console.log("=== MAIN FUNCTION DEBUG ===");
+ // console.log("userAnswers.coverageType:", userAnswers.coverageType);
+ // console.log("numericCoverageAmount:", numericCoverageAmount);
+  
+
+
+   const benefits = getCriticalIllnessBenefits(userAnswers.coverageType, numericCoverageAmount);
+
+ //  console.log("Benefits returned from function:", benefits);
+ // console.log("Benefits spouse exists:", !!benefits.spouse);
+ // console.log("Benefits spouse value:", benefits.spouse);
+
+//console.log(benefits)
+
   // Find the matching product based on coverage tier and amount
   let selectedProduct = collectionProducts.find(product => 
     product.name.includes(coverageTier) && 
@@ -921,9 +960,12 @@ if (selectedProduct) {
         price: price // Override with pricing table price
       },
       price: price,
-      reason: `${amountReason}. ${coverageReason}. ${ageReason}. ${tobaccoReason}.`
+      reason: `${amountReason}. ${coverageReason}. ${ageReason}. ${tobaccoReason}.`,
+      benefits:benefits
     }];
   }
+
+ const fallbackBenefits = benefits;
 
   // Fallback - use first product or create a basic recommendation
   const fallbackProduct = collectionProducts[0] || {
@@ -936,15 +978,19 @@ if (selectedProduct) {
     variantId: 0,
     productBenefits: ['Lump sum benefit for critical illness diagnosis', 'Coverage for major illnesses', 'No restrictions on benefit use']
   };
-  
+   //console.log("Final recommendation object:", fallbackProduct);
+   // console.log("Final recommendation benefits:", fallbackBenefits);
+   // console.log("Final recommendation benefits spouse:", fallbackBenefits.spouse);
   return [{
     product: {
       ...fallbackProduct,
       price: price
     },
     price: price,
-    reason: `${amountReason}. ${coverageReason}. ${ageReason}. ${tobaccoReason}.`
+    reason: `${amountReason}. ${coverageReason}. ${ageReason}. ${tobaccoReason}.`,
+    benefits:fallbackBenefits
   }];
+  
 }
 
 /**
@@ -1017,6 +1063,9 @@ function getHospitalIndemnityRecommendation(
   // Get price from pricing table using the dedicated hospital indemnity function
   const price = getHospitalIndemnityPriceFromTable(selectedPlan, coverageTier, userAge);
   
+   const benefits = getHospitalIndemnityInsuranceBenefits(selectedPlan);
+
+
   // Find the matching product based on plan and coverage tier
   let selectedProduct = collectionProducts.find(product => 
     product.name.includes(selectedPlan) && 
@@ -1030,10 +1079,14 @@ function getHospitalIndemnityRecommendation(
         price: price // Override with pricing table price
       },
       price: price,
-      reason: `${planReason}. ${coverageReason}. ${ageReason}.`
+      reason: `${planReason}. ${coverageReason}. ${ageReason}.`,
+       benefits: benefits
     }];
   }
   
+   const fallbackBenefits = getHospitalIndemnityInsuranceBenefits('Plan A');
+
+
   // Fallback - use first product or create a basic recommendation
   const fallbackProduct = collectionProducts[0] || {
     productId: 0,
@@ -1052,7 +1105,8 @@ function getHospitalIndemnityRecommendation(
       price: price
     },
     price: price,
-    reason: `${planReason}. ${coverageReason}. ${ageReason}.`
+    reason: `${planReason}. ${coverageReason}. ${ageReason}.`,
+    benefits:fallbackBenefits
   }];
 }
 
@@ -1135,7 +1189,10 @@ function getShortTermAccidentSicknessRecommendation(
   
   // Get daily benefit directly from user answers
   let dailyBenefit = userAnswers.dailyBenefit || '$50'; // Default daily benefit if not provided
-  
+  const dbAmount = dailyBenefit
+  const benefits = getShortTermBenefits(dbAmount);
+
+
   // Normalize the daily benefit format to match pricing table (ensure uppercase 'D' in 'Day')
   if (dailyBenefit && typeof dailyBenefit === 'string') {
     dailyBenefit = dailyBenefit.replace('/day', '/Day');
@@ -1182,6 +1239,8 @@ function getShortTermAccidentSicknessRecommendation(
     
 //   );
 
+
+
   // Find the matching product - FIXED LOGIC
   let selectedProduct = collectionProducts.find(product => {
     //console.log('Checking product:', product.name);
@@ -1192,13 +1251,20 @@ function getShortTermAccidentSicknessRecommendation(
     // Extract period number from benefitPeriod (e.g., "14-Day" -> "14")
     const periodNumber = benefitPeriod.replace('-Day', '');
     
+     
+
+
     // Check if product name contains both the benefit amount and period
     // Product names in JSON are like: "$50, 14-day", "$100, 30-day", etc.
     const matchesBenefit = product.name.includes(`$${benefitAmount}`);
     const matchesPeriod = product.name.includes(`${periodNumber}-day`);
     
+
     return matchesBenefit && matchesPeriod;
   });
+
+ 
+
 
  // console.log(selectedProduct?.name)
   if (selectedProduct) {
@@ -1208,7 +1274,8 @@ function getShortTermAccidentSicknessRecommendation(
         price: price // Override with pricing table price
       },
       price: price,
-      reason: `${dailyBenefitReason}. ${periodReason}. ${ageReason}.`
+      reason: `${dailyBenefitReason}. ${periodReason}. ${ageReason}.`,
+      benefits:benefits
     }];
   }
   

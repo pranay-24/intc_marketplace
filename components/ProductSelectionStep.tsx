@@ -8,7 +8,18 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { getRecommendedProducts} from  '@/lib/pricing';
 import { ArrowRight } from 'lucide-react';
+import { AccidentBenefitsRenderer } from '@/components/AccidentBenefitsRenderer'; // Adjust import path as needed
 
+import { CancerBenefitsRenderer } from '@/components/CancerBenefitsRenderer';
+import { HospitalIndemnityBenefitsRenderer } from '@/components/HospitalIndemnityBenefitsRenderer';
+
+import {AccidentPlanBenefits} from '@/components/AccidentBenefitsRenderer'
+import {CancerPlanBenefits} from '@/components/CancerBenefitsRenderer'
+
+import {HospitalIndemnityPlanBenefits} from '@/components/HospitalIndemnityBenefitsRenderer'
+ import {CriticalIllnessBenefitsRenderer, CriticalIllnessPlanBenefits } from '@/components/CriticalIllnessBenefitsRenderer'
+
+  import {ShortTermBenefitsRenderer, ShortTermPlanBenefits } from '@/components/ShortTermBenefitsRenderer'
 
 
 export default function ProductSelectionStep() {
@@ -17,7 +28,7 @@ export default function ProductSelectionStep() {
   // Get recommended products (filtered and sorted by match score)
   const recommendedProducts = useMemo(() => {
     const products = formData.collection?.products || [];
-    console.log(formData.collectionName);
+    //console.log(formData.collectionName);
     return getRecommendedProducts(formData, formData.collectionName!);
   }, [formData]);
 
@@ -101,9 +112,9 @@ export default function ProductSelectionStep() {
 
             {/* Benefits List - combining product and collection benefits */}
             <div className="mt-4">
-              <h4 className="font-medium text-gray-700 mb-2">Plan Benefits:</h4>
+              {/* <h4 className="font-medium text-gray-700 mb-2">Plan Benefits:</h4>
               <ul className="space-y-2">
-                {/* Product-specific benefits */}
+                
                 {product.productBenefits && product.productBenefits.map((benefit, index) => (
                   <li key={`product-${index}`} className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
@@ -111,14 +122,39 @@ export default function ProductSelectionStep() {
                   </li>
                 ))}
                 
-                {/* Collection common benefits */}
+              
                 {formData.collection?.commonBenefits?.map((benefit: string, index: number) => (
                   <li key={`common-${index}`} className="flex items-start">
                     <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                     <span className="text-sm">{benefit}</span>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
+            {/* Render Benefits for Accident Insurance */}
+              {recommendation.benefits && formData.collectionName === 'Accident Insurance' && (
+                <AccidentBenefitsRenderer benefits={recommendation.benefits as AccidentPlanBenefits} />
+              )}
+
+
+             {/* Render Benefits for Cancer Insurance */}
+              {recommendation.benefits && formData.collectionName === 'Cancer Insurance' && (
+                <CancerBenefitsRenderer benefits={recommendation.benefits as CancerPlanBenefits } />
+              )}
+
+  {/* Render Benefits for Hospital Indemnity Insurance */}
+              {recommendation.benefits && formData.collectionName === 'Hospital Indemnity Insurance' && (
+                <HospitalIndemnityBenefitsRenderer benefits={recommendation.benefits as HospitalIndemnityPlanBenefits} />
+              )}
+
+               {recommendation.benefits && formData.collectionName === 'Critical Illness Insurance' && (
+                <CriticalIllnessBenefitsRenderer benefits={recommendation.benefits as CriticalIllnessPlanBenefits } />
+              )}
+
+{recommendation.benefits && formData.collectionName === 'Short Term Accident/Sickness Pay' && (
+                <ShortTermBenefitsRenderer benefits={recommendation.benefits as ShortTermPlanBenefits } />
+              )}
+
+
             </div>
           </Card>
           );
