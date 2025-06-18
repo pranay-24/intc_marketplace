@@ -18,7 +18,7 @@ export function ShortTermBenefitsRenderer({ benefits }: ShortTermBenefitsRendere
       <h4 className="font-medium text-gray-700 mb-3">Your Benefits:</h4>
       <div className="space-y-3">
         <BenefitItem 
-          label="One-Time Benefit:" 
+          label="Daily Benefit:" 
           value={benefits.dailyBenefit} 
         />
        
