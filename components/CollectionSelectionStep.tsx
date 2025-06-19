@@ -57,14 +57,17 @@ export default function CollectionSelectionStep() {
           </Card>
         ))}
       </div>
-      <Button 
+      <div className="flex justify-center mx-auto">
+       <Button 
         type="submit" 
-        className="w-full"
+        className="w-1/2 px-[40px] py-7 "
         disabled={!formData.collectionId}
          onClick={onSubmit}
       >
         Continue <ArrowRight className="ml-2 h-4 w-4" />
       </Button>
+      </div>
+      
     </div>
   );
 }

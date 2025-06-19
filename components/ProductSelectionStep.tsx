@@ -65,21 +65,21 @@ export default function ProductSelectionStep() {
 
   return (
     <div className="space-y-6">
-      <Button
+      {/* <Button
         type="button"
         variant="ghost"
         className="mb-4"
         onClick={prevStep}
       >
         <ArrowLeft className="mr-2 h-4 w-4" /> Back to previous Step
-      </Button>
+      </Button> */}
 
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Select Your Product</h2>
+        <h2 className="text-2xl font-bold mb-2">{`Select Your ${formData.collectionName} Product`}</h2>
         <p className="text-gray-600">Choose the product that best fits your needs</p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1  gap-6">
         {recommendedProducts.map((recommendation: ProductRecommendation) => {
           const product = recommendation.product;
           return (
@@ -107,7 +107,11 @@ export default function ProductSelectionStep() {
             {/* Recommendation reason */}
             <div className="mb-4 p-3 bg-blue-50 rounded-lg">
               <p className="text-sm text-blue-800 font-medium">Why this is recommended:</p>
-              <p className="text-sm text-blue-700">{recommendation.reason}</p>
+              <div className="text-sm text-blue-700">
+  {recommendation.reason.split('.').filter(reason => reason.trim()).map((reason, index) => (
+    <p key={index}>• {reason.trim()}</p>
+  ))}
+</div>
             </div>
 
             {/* Benefits List - combining product and collection benefits */}
@@ -160,14 +164,23 @@ export default function ProductSelectionStep() {
           );
         })}
       </div>
-      <Button 
+      
+
+<div className="flex justify-center mx-auto gap-4">
+   <Button variant="outline" className="w-1/2 px-[40px] py-7" onClick={prevStep}>
+        <ArrowLeft className="mr-2 h-4 w-4 " /> Back 
+      </Button>
+
+ <Button 
         type="submit" 
-        className="w-full"
-        disabled={!formData.selectedProduct}
+        className="w-1/2 px-[40px] py-7 "
+        
+       disabled={!formData.selectedProduct}
          onClick={onSubmit}
       >
         Continue <ArrowRight className="ml-2 h-4 w-4" />
       </Button>
+</div>
 
     </div>
   );

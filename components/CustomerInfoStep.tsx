@@ -8,7 +8,7 @@ import { useForm } from "@/contexts/FormContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import {getMembers} from "@/lib/pricing";
 // Add these imports at the top of your CustomerInfoStep file
 import FamilyMemberSelector, { validateFamilyMembers } from "@/components/FamilyMemberSelector";
@@ -206,14 +206,7 @@ const fixedCoverageType: CoverageType | undefined = (() => {
   if (internalStep === 0) {
     return (
       <div className="space-y-6">
-         <Button
-                type="button"
-                variant="ghost"
-                className="mb-4"
-                onClick={prevStep}
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back to previous Step
-              </Button>
+        
 
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-2">Lets get your personal information</h2>
@@ -302,14 +295,24 @@ const fixedCoverageType: CoverageType | undefined = (() => {
 
 
           </div>
-
-          <Button 
+<div className="flex justify-center mx-auto gap-4">
+ <Button 
+            variant="outline"
+            onClick={prevStep}
+            className="w-1/2 px-[40px] py-7"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back
+          </Button>
+    <Button 
             type="button" 
-            className="w-full"
+            className="w-1/2 px-[40px] py-7"
             onClick={handleNameNext}
           >
             Next
           </Button>
+
+</div>
+        
         </div>
       </div>
     );
@@ -451,14 +454,27 @@ const fixedCoverageType: CoverageType | undefined = (() => {
   </div>
 )}
 
+<div className="flex justify-center mx-auto gap-4">
+   <Button
+                type="button"
+                variant="outline"
+                className="w-1/2 px-[40px] py-7"
+                onClick={prevStep}
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" /> Back 
+              </Button>
 
-        <Button 
+
+  <Button 
           type="submit" 
-          className="w-full"
+          className="w-1/2 px-[40px] py-7"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Saving..." : "Continue to Collection"}
+          <ArrowRight className="mr-2 h-4 w-4" /> {isSubmitting ? "Saving..." : "Confirm Details"}
         </Button>
+</div>
+
+        
       </form>
     </div>
   );

@@ -5,7 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft,ArrowRight } from 'lucide-react';
+import { useForm } from '@/contexts/FormContext';
+
+
 
 interface QuestionRendererProps {
   questions: any[];
@@ -14,6 +17,9 @@ interface QuestionRendererProps {
 }
 
 export default function QuestionRenderer({ questions, initialAnswers, onSubmit }: QuestionRendererProps) {
+  const {  prevStep, resetForm} = useForm();
+
+
   const [answers, setAnswers] = useState(initialAnswers);
 
   const handleAnswerChange = (questionId: string, value: any) => {
@@ -92,13 +98,21 @@ export default function QuestionRenderer({ questions, initialAnswers, onSubmit }
         </div>
       ))}
 
-      <Button 
+<div className="flex justify-center mx-auto gap-4">
+   <Button variant="outline" className="w-1/2 px-[40px] py-7" onClick={resetForm}>
+        <ArrowLeft className="mr-2 h-4 w-4 " /> Reset Form
+      </Button>
+
+ <Button 
         type="submit" 
-        className="w-full"
+        className="w-1/2 px-[40px] py-7 "
+        
         disabled={!isFormValid()}
       >
         Continue <ArrowRight className="ml-2 h-4 w-4" />
       </Button>
+</div>
+     
     </form>
   );
 }

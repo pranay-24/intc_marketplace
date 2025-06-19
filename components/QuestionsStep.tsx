@@ -126,13 +126,13 @@ const getQuestionsForCollection = () => {
 
   return (
     <div className="space-y-6">
-      <Button variant="ghost" onClick={resetForm}>
+      {/* <Button variant="ghost" onClick={resetForm}>
         <ArrowLeft className="mr-2 h-4 w-4" /> Reset Form
-      </Button>
+      </Button> */}
 
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Answer a Few Questions </h2>
-        <p className="text-gray-600">Help us personalize your experience </p>
+        <h2 className="text-2xl font-bold mb-2">{formData.collectionName} Product </h2>
+        <p className="text-gray-600">Answer a few questions and help us personalize your experience </p>
       </div>
 
    

@@ -553,7 +553,7 @@ export function extractUserAnswers(formData: Partial<FormResponse>, collections:
   };
 }
 
-type CoverageType = 'just-me' | 'me+1' | 'family';
+type CoverageType = 'justme' | 'me+1' | 'myfamily';
 export function getMembers(formData: Partial<FormResponse>
   
   ): CoverageType | undefined {
@@ -622,12 +622,12 @@ function getAccidentInsuranceRecommendation(
   let planReason = 'Default selection - Higher reimbursements for hospital stays, surgeries, and doctor visits';
 
   if (userAnswers.planChoice) {
-    if (userAnswers.planChoice.includes('Plan A') || userAnswers.planChoice.includes('Higher reimbursements')) {
+    if (userAnswers.planChoice.includes('Plan A') || userAnswers.planChoice.includes('budget-friendly')) {
       selectedPlan = 'Plan A';
-      planReason = 'Plan A selected - Higher reimbursements for hospital stays, surgeries, and doctor visits';
-    } else if (userAnswers.planChoice.includes('Plan B') || userAnswers.planChoice.includes('budget-friendly')) {
+      planReason = 'Plan A selected - Lower reimbursements, but more budget-friendly';
+    } else if (userAnswers.planChoice.includes('Plan B') || userAnswers.planChoice.includes('Higher reimbursements')) {
       selectedPlan = 'Plan B';
-      planReason = 'Plan B selected - Lower reimbursements, but more budget-friendly';
+      planReason = 'Plan B selected - Higher reimbursements for hospital stays, surgeries, and doctor visits';
     }
   }
   

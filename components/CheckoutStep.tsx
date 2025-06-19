@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CreditCard, User, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, CreditCard, User, MapPin } from "lucide-react";
 import { useForm } from "@/contexts/FormContext";
 import collectionsData from '@/data/questions.json';
 
@@ -272,16 +272,16 @@ export default function EmbeddedCheckoutStep() {
           <Button 
             variant="outline"
             onClick={prevStep}
-            className="flex-1"
+            className="w-1/2 px-[40px] py-7"
           >
-            Back to Edit Info
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Edit Info
           </Button>
           <Button 
             onClick={handleContinueToCheckout}
             disabled={isLoading}
-            className="flex-1"
+            className="w-1/2 px-[40px] py-7"
           >
-            {formData.checkoutUrl ? 'Continue to Checkout' : 'Proceed to Checkout'}
+            {formData.checkoutUrl ? 'Continue to Checkout' : 'Proceed to Checkout'} <ArrowRight className="mr-2 h-4 w-4" />
           </Button>
         </div>
       </div>

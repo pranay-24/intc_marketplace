@@ -8,8 +8,8 @@
             "question": "Select your coverage plan:",
             "questionName":"planChoice",
             "type": "single_choice",
-            "options": ["Plan A – Higher reimbursements for hospital stays, surgeries, and doctor visits", "Plan B – Lower reimbursements, but more budget-friendly"],
-            "required": false
+            "options": ["Plan A – Lower reimbursements, but more budget-friendly", "Plan B – Higher reimbursements for hospital stays, surgeries, and doctor visits "],
+            "required": true
           },
           {
             "id": "accident_2",
