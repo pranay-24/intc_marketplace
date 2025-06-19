@@ -412,7 +412,7 @@ const fixedCoverageType: CoverageType | undefined = (() => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="zipCode">ZIP Code</Label>
+            <Label htmlFor="zipCode">ZIP Codes</Label>
             <Input
               id="zipCode"
               {...register("zipCode")}
