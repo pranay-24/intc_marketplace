@@ -98,7 +98,7 @@ export function HospitalIndemnityBenefitsRenderer({ benefits }: HospitalIndemnit
 
   return (
     <div className="mt-4">
-      <h4 className="font-medium text-gray-700 mb-3">Your Plan Benefits:{memberType}</h4>
+      <h4 className="font-medium text-gray-700 mb-3">Your Plan Benefits:</h4>
       
       {/* Original benefits display */}
       <div className="space-y-3 mb-6">
