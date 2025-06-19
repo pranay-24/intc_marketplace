@@ -168,7 +168,7 @@ export function AuthComponent({ onAuthSuccess }: AuthComponentProps) {
       <div className="max-w-md mx-auto mt-8">
         <Card>
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Hi! I am Zoe! 👋</CardTitle>
+            <CardTitle className="text-2xl">Hi! I am Zoe 👋</CardTitle>
             <CardDescription className="text-base">
               Do you already have an Insuriana account?
             </CardDescription>
