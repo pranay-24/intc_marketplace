@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, CreditCard, User, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, CreditCard, User, MapPin, Shield, ExternalLink } from "lucide-react";
 import { useForm } from "@/contexts/FormContext";
 import collectionsData from '@/data/questions.json';
 
@@ -150,18 +150,18 @@ export default function EmbeddedCheckoutStep() {
   if (showConfirmation && !isLoading) {
     return (
       <div className="space-y-6">
-        <Button 
+        {/* <Button 
           variant="ghost" 
           className="mb-4" 
           onClick={prevStep}
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Customer Info
-        </Button>
+        </Button> */}
 
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold mb-2">Ready for Checkout</h2>
+          <h2 className="text-2xl font-bold mb-2">Confirm Your Details</h2>
           <p className="text-gray-600">
-            Review your information and proceed to secure checkout
+            Review your information, plan details and proceed to secure checkout
           </p>
         </div>
 
@@ -253,6 +253,50 @@ export default function EmbeddedCheckoutStep() {
               </div>
             </div>
           )}
+
+           <div className="border-t pt-6">
+      <div className="flex items-start gap-3 mb-4">
+        <Shield className="h-5 w-5 text-blue-600 mt-1" />
+        <div className="w-full">
+          <h4 className="font-medium mb-3">Insurance Partner</h4>
+          
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-center gap-3 mb-3">
+              {/* NFC Logo Placeholder */}
+              <div className="w-25 h-14   flex items-center justify-center">
+               <img alt="NFC logo" className="w-full h-full object-contain" src="/NFC_logo.png" />
+              </div>
+              
+              <div className="flex-1">
+                <h5 className="font-medium text-gray-900">NFC Insurance Company</h5>
+                <p className="text-blue-700 text-xs">Our Preferred Insurance Partner</p>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <p className="text-sm text-blue-800">
+                <strong>NFC is our preferred insurance partner</strong> to provide comprehensive insurance plans to our customers.With years of trusted service and expertise, NFC will process and issue your insurance plan directly upon checkout completion.
+              </p>
+              
+              
+              {/* Website Link */}
+              <div className="pt-1">
+                <a 
+                  href="https://nfcinsurance.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+                >
+                  Visit NFC Insurance Website
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
         </div>
 
         {error && (

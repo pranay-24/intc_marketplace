@@ -255,7 +255,7 @@ export function AuthComponent({ onAuthSuccess }: AuthComponentProps) {
                 </Button>
               </form>
 
-              <div className="relative">
+              {/* <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t" />
                 </div>
@@ -264,9 +264,9 @@ export function AuthComponent({ onAuthSuccess }: AuthComponentProps) {
                     Or continue with
                   </span>
                 </div>
-              </div>
+              </div> */}
 
-              <Button
+              {/* <Button
                 type="button"
                 variant="outline"
                 onClick={handleGoogleSignIn}
@@ -275,7 +275,7 @@ export function AuthComponent({ onAuthSuccess }: AuthComponentProps) {
               >
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Continue with Google
-              </Button>
+              </Button> */}
 
               <Button
                 type="button"
