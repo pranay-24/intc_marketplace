@@ -40,7 +40,7 @@ export default function CollectionSelectionStep() {
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">Which Insurance would you like?</h2>
-        <p className="text-gray-600">Select the collection that best fits your needs</p>
+        <p className="text-gray-600">Select the collection that best fits your needs.</p>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
