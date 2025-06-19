@@ -181,7 +181,7 @@ export function AuthComponent({ onAuthSuccess }: AuthComponentProps) {
             >
               Yes, I have an account
             </Button>
-            <Button 
+            <Button
               onClick={() => handleViewChange('signup')} 
               variant="outline" 
               className="w-full"
