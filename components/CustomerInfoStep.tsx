@@ -48,8 +48,8 @@ export default function CustomerInfoStep() {
  
 
 // Option 1: Using an immediately invoked function expression (IIFE)
-const fixedCoverageType = (() => {
-// : CoverageType | undefined
+const fixedCoverageType : any= (() => {
+// 
   
    // Get coverage type from previous answers
   const coverageType= getMembers(formData);
